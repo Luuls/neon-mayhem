@@ -1,7 +1,8 @@
 import pygame
 import functions
+import classes
 
-screen, states, current_state, title_surface, subtitle_surface = functions.load_game()
+game = classes.Game()
 
 # Inicia o clock e define a taxa de frames
 clock = pygame.time.Clock()
@@ -20,11 +21,11 @@ while True:
             exit()
 
     # Dispara a condição para iniciar o level
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and current_state == states['MENU']:
-            current_state = states['LEVEL']
+        if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and game.current_state == game.states['MENU']:
+            game.current_state = game.states['LEVEL']
 
 # Função para gerenciar a exibição na tela
-    functions.screen_management(current_state, states, screen, title_surface, subtitle_surface)
+    functions.screen_management(game.current_state, game.states, game.screen, game.title_surface, game.subtitle_surface)
     
     clock.tick(FPS)
         

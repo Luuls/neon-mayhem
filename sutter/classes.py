@@ -1,6 +1,30 @@
 import pygame
 import random
 
+class Game():
+
+    def __init__(self):
+        pygame.init()
+
+        # Controle da tela do jogo
+        self.states = {
+        'MENU': 0,
+        'LEVEL': 1
+        }
+
+        self.current_state = self.states['MENU']
+
+    # Inicializa o display
+        self.screen = pygame.display.set_mode((800, 600))
+        self.screen.fill('Purple')
+        pygame.display.set_caption('Neon Mayhem')
+
+    # Inicializa o texto do menu
+        self.title = pygame.font.Font(None, 40)
+        self.subtitle = pygame.font.Font(None, 40)
+        self.title_surface = self.title.render('NEON MAYHEM', True, 'Yellow')
+        self.subtitle_surface  = self.subtitle.render('Press ENTER to play', True, 'Yellow')
+
 class Blast():
 
     def __init__(self, color, speed):
