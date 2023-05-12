@@ -25,6 +25,11 @@ class Game():
         self.title_surface = self.title.render('NEON MAYHEM', True, 'Yellow')
         self.subtitle_surface  = self.subtitle.render('Press ENTER to play', True, 'Yellow')
 
+    # Inicializa a música
+        pygame.mixer.music.load('../assets/menu_track.mp3')
+        pygame.mixer.music.set_volume(0.5)
+        pygame.mixer.music.play()
+
 class Blast():
 
     def __init__(self, color, speed):

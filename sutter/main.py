@@ -22,6 +22,7 @@ while True:
 
     # Dispara a condição para iniciar o level
         if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and game.current_state == game.states['MENU']:
+            pygame.mixer.music.stop()
             game.current_state = game.states['LEVEL']
 
 # Função para gerenciar a exibição na tela
