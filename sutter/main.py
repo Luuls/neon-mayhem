@@ -1,8 +1,9 @@
 import pygame
 import functions
-import classes
+import game_classes
 
-game = classes.Game()
+# Instancia classe que iniciará o jogo
+game = game_classes.Game()
 
 # Inicia o clock e define a taxa de frames
 clock = pygame.time.Clock()
@@ -10,6 +11,7 @@ FPS = 60
 
 while True:
 
+    # Laço para controlar o input do usuário
     for event in pygame.event.get():
 
         if event.type == pygame.QUIT:
@@ -26,7 +28,7 @@ while True:
             game.current_state = game.states['LEVEL']
 
 # Função para gerenciar a exibição na tela
-    functions.screen_management(game.current_state, game.states, game.screen, game.title_surface, game.subtitle_surface)
+    functions.screen_management(game.current_state, game.states, game.screen, game.title_surf, game.subtitle_surf, game.title_rect, game.subtitle_rect)
     
     clock.tick(FPS)
         
