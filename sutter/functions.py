@@ -9,6 +9,8 @@ def screen_management(g_current_state, g_states, g_screen, g_title_surf, g_subti
         g_screen.blit(g_subtitle_surf, g_subtitle_rect)
     
     elif g_current_state == g_states['LEVEL']:
+        pygame.mixer.music.stop()
+        
         g_screen.fill((48, 25, 52))
         pygame.draw.circle(g_screen, 'Yellow', (400, 300), 40)
 
