@@ -1,6 +1,4 @@
 import pygame
-import random
-
 # Classe para iniciar o jogo
 class Game():
 
