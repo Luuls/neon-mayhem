@@ -1,31 +1,32 @@
 import pygame
-import functions
-import game_classes
+from game.game import Game
 
-# Instancia classe que iniciará o jogo
-game = game_classes.Game()
+def main():
+    # Instancia classe que iniciará o jogo
+    game = Game()
 
-# Inicia o clock e define a taxa de frames
-clock = pygame.time.Clock()
-FPS = 60
+    # Inicia o clock e define a taxa de frames
+    clock = pygame.time.Clock()
+    FPS = 60
 
-while True:
+    while True:
+        # Laço para controlar o input do usuário
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
 
-    # Laço para controlar o input do usuário
-    for event in pygame.event.get():
+                pygame.quit()
+                exit()
 
-        if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-
-            pygame.quit()
-            exit()
-
-        # Dispara a condição para iniciar o level
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN and game.current_state == game.states['MENU']:
-            pygame.mixer.music.stop()
-            game.current_state = game.states['LEVEL']
-
-    # Função para gerenciar a exibição na tela
-    functions.screen_management(game)
-    
-    clock.tick(FPS)
+            # Dispara a condição para iniciar o level
+            if game.current_state == game.states['MENU']:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        pygame.mixer.music.stop()
+                        game.current_state = game.states['LEVEL']
+                    
+        game.screen_management()
         
+        clock.tick(FPS)
+        
+if __name__ == '__main__':
+    main()
