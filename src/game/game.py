@@ -1,8 +1,8 @@
 import pygame
 
+from utility.utils import get_assets_path
 from game import game_constants
 from entities.blast import Blast
-
 class Game():
     # Controle da tela do jogo
     states = {
@@ -40,8 +40,9 @@ class Game():
         )
 
         # Inicializa trilha sonora do menu
-        pygame.mixer.music.load('../assets/menu_track.mp3')
-        pygame.mixer.music.set_volume(0.4)
+        assets_path = get_assets_path(__file__)
+        pygame.mixer.music.load(f'{assets_path}/menu_track.mp3')
+        pygame.mixer.music.set_volume(0.1)
         pygame.mixer.music.play()
         
     def screen_management(self) -> None:
@@ -56,10 +57,10 @@ class Game():
                 self.screen,
                 'Yellow', 
                 (game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2), 
-                40
+                20
             )
 
             projectile = Blast('Red', 0)
-            projectile.draw_blast(self.screen)
+            projectile.drawAt(self.screen)
 
         pygame.display.flip()
