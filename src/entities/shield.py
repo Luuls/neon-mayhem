@@ -7,28 +7,37 @@ class Shield:
 
     # adicionar o parâmetro lane depois, talvez
     def __init__(self):
-        self.direction = "UP"
+        self.direction = "RIGHT"
         self.color = "Blue"
         self.width = 100
         self.height = 10
-        self.position_x = game_constants.SCREEN_WIDTH / 2
-        self.position_y = (game_constants.SCREEN_HEIGHT / 2) - 50
+        self.position_x = 0
+        self.position_y = 0
+        self.change_direction(self.direction)
 
     def change_direction(self, new_direction: str):
         self.direction = new_direction
         if new_direction == "UP":
+            self.width = 100
+            self.height = 10
             self.position_x = game_constants.SCREEN_WIDTH / 2
             self.position_y = (game_constants.SCREEN_HEIGHT / 2) - 50
 
         elif new_direction == "DOWN":
+            self.width = 100
+            self.height = 10
             self.position_x = game_constants.SCREEN_WIDTH / 2
             self.position_y = (game_constants.SCREEN_HEIGHT / 2) + 50
 
         elif new_direction == "LEFT":
+            self.width = 10
+            self.height = 100
             self.position_x = (game_constants.SCREEN_WIDTH / 2) - 50
             self.position_y = game_constants.SCREEN_HEIGHT / 2
 
         elif new_direction == "RIGHT":
+            self.width = 10
+            self.height = 100
             self.position_x = (game_constants.SCREEN_WIDTH / 2) + 50
             self.position_y = game_constants.SCREEN_HEIGHT / 2
 
