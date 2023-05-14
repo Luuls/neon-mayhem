@@ -55,12 +55,11 @@ class Game():
             pygame.draw.circle(
                 self.screen,
                 'Yellow', 
-                (game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_WIDTH / 2), 
+                (game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2), 
                 40
             )
 
             projectile = Blast('Red', 0)
-            projectile.blast_position()
             projectile.draw_blast(self.screen)
 
         pygame.display.flip()

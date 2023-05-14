@@ -5,7 +5,7 @@ import game.game_constants as game_constants
 # Classe dos projéteis
 class Blast:
 
-    def __init__(self, color, speed: int, lane: None):
+    def __init__(self, color, speed: int):
         self.color = color
         self.speed = speed
         self.lane = random.randint(1, 4)
