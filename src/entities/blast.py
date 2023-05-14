@@ -25,5 +25,5 @@ class Blast:
             self.position_x = 0
             self.position_y = game_constants.SCREEN_HEIGHT / 2
     
-    def drawAt(self, screen: Surface):
+    def draw_at(self, screen: Surface):
         draw.circle(screen, self.color, (self.position_x, self.position_y), 20)
