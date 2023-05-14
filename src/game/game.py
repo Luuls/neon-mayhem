@@ -2,7 +2,7 @@ import pygame
 
 from game import game_constants
 from entities.blast import Blast
-
+from entities.shield import Shield
 class Game():
     # Controle da tela do jogo
     states = {
@@ -14,6 +14,8 @@ class Game():
     def __init__(self):
         pygame.init()
         self.states
+        
+        self.shield = Shield()
 
         self.current_state = self.states['MENU']
 
@@ -51,15 +53,17 @@ class Game():
             self.screen.blit(self.subtitle_surface, self.subtitle_rect)
         
         elif self.current_state == self.states['LEVEL']:
+            
             self.screen.fill((48, 25, 52))
             pygame.draw.circle(
                 self.screen,
                 'Yellow', 
                 (game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2), 
-                40
+                20
             )
+            self.shield.draw_at(self.screen)
 
             projectile = Blast('Red', 0)
-            projectile.draw_blast(self.screen)
+            projectile.draw_at(self.screen)
 
         pygame.display.flip()
