@@ -15,6 +15,7 @@ class Shield:
         self.position_y = 0
         self.change_direction(self.direction)
 
+    # possíveis direções do escudo
     def change_direction(self, new_direction: str):
         self.direction = new_direction
         if new_direction == "UP":

@@ -4,6 +4,7 @@ from utility.utils import get_assets_path
 from game import game_constants
 from entities.blast import Blast
 from entities.shield import Shield
+from entities.player import Player
 class Game():
     # Controle da tela do jogo
     states = {
@@ -17,6 +18,12 @@ class Game():
         self.states
         
         self.shield = Shield()
+
+    def __init__(self):
+        pygame.init()
+        self.states
+        
+        self.player = Player()
 
         self.current_state = self.states['MENU']
 
@@ -64,6 +71,8 @@ class Game():
                 20
             )
             self.shield.draw_at(self.screen)
+
+            self.player.draw_at(self.screen)
 
             projectile = Blast('Red', 0)
             projectile.draw_at(self.screen)
