@@ -25,7 +25,7 @@ class Player:
     def draw_at(self, screen: Surface):
         # Carrega a imagem do player
         image_path = get_assets_path(__file__)  # image_path = get_assets_path(__file__) + '\\example_image.png'
-        player_image = image.load(f'{image_path}\player.png')
+        player_image = image.load(f'{image_path}/sprites/player_sprite.png')
 
         # Cria o círculo
         circulo = draw.circle(screen, self.color, (self.position_x, self.position_y), self.radius, self.border)

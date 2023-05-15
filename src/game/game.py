@@ -34,18 +34,18 @@ class Game():
         assets_path = get_assets_path(__file__)
 
         # Inicializa as imagens do menu e do level
-        menu_load = pygame.image.load(f'{assets_path}/menu_background.jpg').convert()
+        menu_load = pygame.image.load(f'{assets_path}/backgrounds/menu_background.jpg').convert()
         self.menu_surface = pygame.transform.scale(
             menu_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
         )
         
-        level_load = pygame.image.load(f'{assets_path}/level_background.jpg').convert()
+        level_load = pygame.image.load(f'{assets_path}/backgrounds/level_background.jpg').convert()
         self.level_surface = pygame.transform.scale(
             level_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
         )
 
         # Inicializa o texto do menu
-        self.title = pygame.font.Font(f'{assets_path}/game_font.ttf', 70)
+        self.title = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
         self.title_surface = self.title.render(
             'NEON MAYHEM', True, '#01bfff'
         )
@@ -53,7 +53,7 @@ class Game():
             center=(game_constants.SCREEN_WIDTH / 2, 50)
         )
 
-        self.subtitle = pygame.font.Font(f'{assets_path}/game_font.ttf', 70)
+        self.subtitle = self.title
         self.subtitle_surface = self.subtitle.render(
             'Press ENTER to play', True, '#01bfff'
         )
@@ -61,7 +61,7 @@ class Game():
             center=(game_constants.SCREEN_WIDTH / 2, 150)
         )
 
-        self.copyright = pygame.font.Font(f'{assets_path}/game_font.ttf', 17)
+        self.copyright = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 17)
         self.copyright_surface = self.copyright.render(
             '2023 Nemesis Game Co. Published by M. R. Zatelli. All rights reserved.', True, 'White'
         )
@@ -70,7 +70,7 @@ class Game():
         )
 
         # Inicializa trilha sonora do menu
-        pygame.mixer.music.load(f'{assets_path}/menu_track.mp3')
+        pygame.mixer.music.load(f'{assets_path}/songs/menu_track.mp3')
         pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
         pygame.mixer.music.play()
         
