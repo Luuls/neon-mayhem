@@ -1,51 +1,39 @@
-from pygame import Surface, draw, Rect
+from pygame import Surface, draw, Rect, image, transform
 from game import game_constants
+from utility.utils import get_assets_path
 # game_constants.SCREEN_WIDTH = x
 # game_constants.SCREEN_HEIGHT = y
 
-class Shield:
+class Shield():
+
     # adicionar o parâmetro lane depois, talvez
     def __init__(self):
-        self.direction = "RIGHT"
-        self.color = "Blue"
-        self.width = 100
-        self.height = 10
-        self.position_x = 0
-        self.position_y = 0
-        self.change_direction(self.direction)
+         
+        assets_path = get_assets_path(__file__)
+        self.sprite = image.load(f'{assets_path}/sprites/shield_sprite.png').convert_alpha()
 
-    # possíveis direções do escudo
-    def change_direction(self, new_direction: str):
-        self.direction = new_direction
-        if new_direction == "UP":
-            self.width = 100
-            self.height = 10
-            self.position_x = game_constants.SCREEN_WIDTH / 2
-            self.position_y = (game_constants.SCREEN_HEIGHT / 2) - 50
+    
+    def update_shield_lane(self, lane):
 
-        elif new_direction == "DOWN":
-            self.width = 100
-            self.height = 10
-            self.position_x = game_constants.SCREEN_WIDTH / 2
-            self.position_y = (game_constants.SCREEN_HEIGHT / 2) + 50
+        self.lane = lane
 
-        elif new_direction == "LEFT":
-            self.width = 10
-            self.height = 100
-            self.position_x = (game_constants.SCREEN_WIDTH / 2) - 50
-            self.position_y = game_constants.SCREEN_HEIGHT / 2
+        if self.lane == 'RIGHT':
+            self.shield_sprite = transform.rotozoom(self.sprite, 0 , 0.06)
+            self.shield_rect = self.shield_sprite.get_rect()
+            self.shield_rect.center = (game_constants.SCREEN_WIDTH / 2 + 120, game_constants.SCREEN_HEIGHT / 2)
 
-        elif new_direction == "RIGHT":
-            self.width = 10
-            self.height = 100
-            self.position_x = (game_constants.SCREEN_WIDTH / 2) + 50
-            self.position_y = game_constants.SCREEN_HEIGHT / 2
 
-    def draw_at(self, screen: Surface):
-        # Cria o retângulo
-        rect = Rect(0, 0, self.width, self.height)
+        if self.lane == 'LEFT':
+            self.shield_sprite = transform.rotozoom(self.sprite, 0 , 0.06)
+            self.shield_rect = self.shield_sprite.get_rect()
+            self.shield_rect.center = (game_constants.SCREEN_WIDTH / 2 - 120, game_constants.SCREEN_HEIGHT / 2)
 
-        # Centraliza o retângulo na posição desejada
-        rect.center = (self.position_x, self.position_y)
+        if self.lane == 'UP':
+            self.shield_sprite = transform.rotozoom(self.sprite, 90 , 0.06)
+            self.shield_rect = self.shield_sprite.get_rect()
+            self.shield_rect.center = (game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 - 120)
 
-        draw.rect(screen, self.color, rect)
+        if self.lane == 'DOWN':
+            self.shield_sprite = transform.rotozoom(self.sprite, 90 , 0.06)
+            self.shield_rect = self.shield_sprite.get_rect()
+            self.shield_rect.center = (game_constants.SCREEN_WIDTH / 2 + 10, game_constants.SCREEN_HEIGHT / 2 + 120)

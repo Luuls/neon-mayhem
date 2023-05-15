@@ -27,7 +27,19 @@ def main():
             if game.get_current_state() == 'LEVEL':
                 if event.type == game.blast_timer:
                     game.spawn_blast()
-        
+                    
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_UP:
+                        game.player.shield.update_shield_lane('UP')
+                        
+                    if event.key == pygame.K_DOWN:
+                        game.player.shield.update_shield_lane('DOWN')
+                        
+                    if event.key == pygame.K_LEFT:
+                        game.player.shield.update_shield_lane('LEFT')
+                        
+                    if event.key == pygame.K_RIGHT:
+                        game.player.shield.update_shield_lane('RIGHT')
         # Controle do que é exibido na tela no estado atual
         game.render_screen()
         clock.tick(FPS)
