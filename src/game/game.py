@@ -15,12 +15,8 @@ class Game():
     }
 
     def __init__(self):
-
         pygame.init()
-        self.states
-        self.player = Player()
 
-        self.current_state = self.states['MENU']
 
         # Inicializa o display
         self.screen = pygame.display.set_mode(
@@ -28,7 +24,6 @@ class Game():
         )
 
         pygame.display.set_caption('Neon Mayhem')
-
         
         # Pega o path dos assets
         assets_path = get_assets_path(__file__)
@@ -73,6 +68,11 @@ class Game():
         pygame.mixer.music.load(f'{assets_path}/songs/menu_track.mp3')
         pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
         pygame.mixer.music.play()
+
+        self.current_state = self.states['MENU']
+
+        # cria as entidades do jogo
+        self.player = Player()
         
     def screen_management(self) -> None:
         if self.current_state == self.states['MENU']:
@@ -84,7 +84,7 @@ class Game():
         
         elif self.current_state == self.states['LEVEL']:
             
-            self.screen.fill((48, 25, 52))
+            self.screen.blit(self.level_surface, (0, 0))
             
             self.player.shield.draw_at(self.screen)
 
