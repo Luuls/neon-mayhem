@@ -18,7 +18,6 @@ class Game():
     def __init__(self):
         pygame.init()
 
-
         # Inicializa o display
         self.screen = pygame.display.set_mode(
             (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
@@ -77,21 +76,20 @@ class Game():
         pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
         pygame.mixer.music.play()
 
-        self.current_state = self.states['MENU']
+        self.current_state = 'MENU'
 
         # cria as entidades do jogo
         self.player = Player()
         
     def screen_management(self) -> None:
-        if self.current_state == self.states['MENU']:
+        if self.current_state == 'MENU':
             self.screen.blit(self.menu_surface, (0, 0))
 
             self.screen.blit(self.title_surface, self.title_rect)
             self.screen.blit(self.subtitle_surface, self.subtitle_rect)
             self.screen.blit(self.copyright_surface, self.copyright_rect)
         
-        elif self.current_state == self.states['LEVEL']:
-            
+        elif self.current_state == 'LEVEL':
             self.screen.blit(self.level_surface, (0, 0))
             
             self.player.shield.draw_at(self.screen)
