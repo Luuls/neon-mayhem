@@ -16,13 +16,6 @@ class Game():
     def __init__(self):
         pygame.init()
         self.states
-        
-        self.shield = Shield()
-
-    def __init__(self):
-        pygame.init()
-        self.states
-        
         self.player = Player()
 
         self.current_state = self.states['MENU']
@@ -64,13 +57,8 @@ class Game():
         elif self.current_state == self.states['LEVEL']:
             
             self.screen.fill((48, 25, 52))
-            pygame.draw.circle(
-                self.screen,
-                'Yellow', 
-                (game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2), 
-                20
-            )
-            self.shield.draw_at(self.screen)
+            
+            self.player.shield.draw_at(self.screen)
 
             self.player.draw_at(self.screen)
 
