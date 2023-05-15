@@ -17,8 +17,6 @@ class Game():
     def __init__(self):
 
         pygame.init()
-        self.states
-        self.player = Player()
 
         self.current_state = self.states['MENU']
 
@@ -73,6 +71,8 @@ class Game():
         pygame.mixer.music.load(f'{assets_path}/songs/menu_track.mp3')
         pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
         pygame.mixer.music.play()
+
+        self.player = Player()
         
     def screen_management(self) -> None:
         if self.current_state == self.states['MENU']:
@@ -84,7 +84,7 @@ class Game():
         
         elif self.current_state == self.states['LEVEL']:
             
-            self.screen.fill((48, 25, 52))
+            self.screen.blit(self.level_surface, (0, 0))
             
             self.player.shield.draw_at(self.screen)
 
