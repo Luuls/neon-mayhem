@@ -4,7 +4,6 @@ from game import game_constants
 # game_constants.SCREEN_HEIGHT = y
 
 class Shield:
-
     # adicionar o parâmetro lane depois, talvez
     def __init__(self):
         self.direction = "RIGHT"
