@@ -8,14 +8,15 @@ from entities.player import Player
 
 class Game():
     
-    # Controle da tela do jogo
-    states = {
-        'MENU': 0,
-        'LEVEL': 1,
-        'GAMEOVER': 2
-    }
 
     def __init__(self):
+    # Controle da tela do jogo
+        self.states = {
+            'MENU': self.render_menu,
+            'LEVEL': self.render_level,
+            'GAMEOVER': 2
+        }
+
         pygame.init()
 
         # Inicializa o display
@@ -77,30 +78,33 @@ class Game():
         pygame.mixer.music.play()
 
         self.current_state = 'MENU'
+        self.render_state_screen = self.states[self.current_state]
 
         # cria as entidades do jogo
         self.player = Player()
         
     def screen_management(self) -> None:
-        if self.current_state == 'MENU':
-            self.screen.blit(self.menu_surface, (0, 0))
+        self.render_state_screen()
+    
+    def render_menu(self):
+        self.screen.blit(self.menu_surface, (0, 0))
 
-            self.screen.blit(self.title_surface, self.title_rect)
-            self.screen.blit(self.subtitle_surface, self.subtitle_rect)
-            self.screen.blit(self.copyright_surface, self.copyright_rect)
-        
-        elif self.current_state == 'LEVEL':
-            self.screen.blit(self.level_surface, (0, 0))
-            
-            self.player.shield.draw_at(self.screen)
-
-            self.player.draw_at(self.screen)
-
-            for projectile in self.blast_list:
-                projectile.draw_at(self.screen)
-                projectile.update_position()
+        self.screen.blit(self.title_surface, self.title_rect)
+        self.screen.blit(self.subtitle_surface, self.subtitle_rect)
+        self.screen.blit(self.copyright_surface, self.copyright_rect)
 
         pygame.display.flip()
+
+    def render_level(self):
+        self.screen.blit(self.level_surface, (0, 0))
+        
+        self.player.shield.draw_at(self.screen)
+
+        self.player.draw_at(self.screen)
+
+        for projectile in self.blast_list:
+            projectile.draw_at(self.screen)
+            projectile.update_position()
 
     def spawn_blast(self):
         
