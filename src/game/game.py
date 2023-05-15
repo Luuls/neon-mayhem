@@ -63,7 +63,7 @@ class Game():
             center=(game_constants.SCREEN_WIDTH / 2, 150)
         )
 
-        self.copyright = pygame.font.Font(f'{assets_path}/game_font.ttf', 20)
+        self.copyright = pygame.font.Font(f'{assets_path}/game_font.ttf', 17)
         self.copyright_surface = self.copyright.render(
             '2023 Nemesis Game Co. Published by M. R. Zatelli. All rights reserved.', True, 'White'
         )
