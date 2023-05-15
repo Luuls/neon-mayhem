@@ -5,13 +5,14 @@ from game import game_constants
 from entities.blast import Blast
 from entities.shield import Shield
 from entities.player import Player
+
 class Game():
     
     # Controle da tela do jogo
     states = {
         'MENU': 0,
         'LEVEL': 1,
-        'GAMEOVER': 3
+        'GAMEOVER': 2
     }
 
     def __init__(self):
@@ -27,6 +28,13 @@ class Game():
         
         # Pega o path dos assets
         assets_path = get_assets_path(__file__)
+
+        # Inicia o timer do blast
+        self.blast_timer = pygame.USEREVENT + 1
+        pygame.time.set_timer(self.blast_timer, 750)
+
+        # Inicia a lista do do blast
+        self.blast_list = []
 
         # Inicializa as imagens do menu e do level
         menu_load = pygame.image.load(f'{assets_path}/backgrounds/menu_background.jpg').convert()
@@ -90,7 +98,13 @@ class Game():
 
             self.player.draw_at(self.screen)
 
-            projectile = Blast('Red', 0)
-            projectile.draw_at(self.screen)
+            for projectile in self.blast_list:
+                projectile.draw_at(self.screen)
+                projectile.update_position()
 
         pygame.display.flip()
+
+    def spawn_blast(self):
+        
+        new_blast = Blast('Blue', 10)
+        self.blast_list.append(new_blast)

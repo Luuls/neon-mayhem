@@ -24,6 +24,10 @@ def main():
                     if event.key == pygame.K_RETURN:
                         pygame.mixer.music.stop()
                         game.current_state = game.states['LEVEL']
+            
+            if game.current_state == game.states['LEVEL']:
+                if event.type == game.blast_timer:
+                    game.spawn_blast()
         
         # Controle do que é exibido na tela no estado atual
         game.screen_management()
