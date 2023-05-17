@@ -10,13 +10,6 @@ class Game():
     
 
     def __init__(self):
-    # Controle da tela do jogo
-        self.states = {
-            'MENU': self.render_menu,
-            'LEVEL': self.render_level,
-            'GAMEOVER': 2
-        }
-
         pygame.init()
 
         # Inicializa o display
@@ -26,16 +19,11 @@ class Game():
 
         pygame.display.set_caption('Neon Mayhem')
         
-        # Pega o path dos assets
-        assets_path = get_assets_path(__file__)
-
         # Inicia o timer do blast
         self.blast_timer = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.blast_timer, 750)
+        pygame.time.set_timer(self.blast_timer, 470)
 
-        # Inicia a lista do do blast
-        self.blast_list = []
-
+        assets_path = get_assets_path(__file__)
         # Inicializa as imagens do menu e do level
         menu_load = pygame.image.load(f'{assets_path}/backgrounds/menu_background.jpg').convert()
         self.menu_surface = pygame.transform.scale(
@@ -77,14 +65,33 @@ class Game():
         pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
         pygame.mixer.music.play()
 
+        # Controle da tela do jogo
+        self.states = {
+            'MENU': self.render_menu,
+            'LEVEL': self.render_level
+            # 'GAMEOVER': 2
+        }
+
         self.current_state = 'MENU'
         self.render_state_screen = self.states[self.current_state]
 
         # cria as entidades do jogo
         self.player = Player()
+
+        # inicia a lista do do blast
+        self.blast_list = []
+
+
+    def get_current_state(self) -> str:
+        return self.current_state
+
+    def set_current_state(self, new_state: str) -> None:
+        self.current_state = new_state
+        self.render_state_screen = self.states[self.current_state]
         
-    def screen_management(self) -> None:
+    def render_screen(self) -> None:
         self.render_state_screen()
+        pygame.display.flip()
     
     def render_menu(self):
         self.screen.blit(self.menu_surface, (0, 0))
@@ -93,13 +100,10 @@ class Game():
         self.screen.blit(self.subtitle_surface, self.subtitle_rect)
         self.screen.blit(self.copyright_surface, self.copyright_rect)
 
-        pygame.display.flip()
-
     def render_level(self):
         self.screen.blit(self.level_surface, (0, 0))
         
         self.player.shield.draw_at(self.screen)
-
         self.player.draw_at(self.screen)
 
         for projectile in self.blast_list:
