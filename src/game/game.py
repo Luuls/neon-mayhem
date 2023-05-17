@@ -75,7 +75,7 @@ class Game():
         self.current_state = 'MENU'
         self.render_state_screen = self.states[self.current_state]
 
-        # cria as entidades do jogo
+        # cria as entidades do jogo e inicializa o escudo
         self.player = Player()
         self.player.shield.update_shield_lane('UP')
 
