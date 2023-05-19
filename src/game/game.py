@@ -111,6 +111,7 @@ class Game():
         )
 
         for alpha in range(255, 0, -1):
+            pygame.event.get()
             self.fade.set_alpha(alpha)
             self.screen.blit(self.intro_credits_surf, self.intro_credits_rect)
             self.screen.blit(self.fade, (0, 0))
@@ -118,6 +119,7 @@ class Game():
             pygame.time.delay(18)
         
         for alpha in range(0, 255):
+            pygame.event.get()
             self.fade.set_alpha(alpha)
             self.screen.blit(self.intro_credits_surf, self.intro_credits_rect)
             self.screen.blit(self.fade, (0, 0))
@@ -133,6 +135,7 @@ class Game():
         )
 
         for alpha in range(255, 0, -1):
+            pygame.event.get()
             self.fade.set_alpha(alpha)
             self.screen.blit(self.intro_credits_surf, self.intro_credits_rect)
             self.screen.blit(self.fade, (0, 0))
@@ -148,6 +151,7 @@ class Game():
         )
 
         for alpha in range(255, 0, -1):
+            pygame.event.get()
             self.fade.set_alpha(alpha)
             self.screen.blit(self.intro_credits_surf, self.intro_credits_rect)
             self.screen.blit(self.intro_credits_2_surf, self.intro_credits_2_rect)
@@ -156,6 +160,7 @@ class Game():
             pygame.time.delay(18)
         
         for alpha in range(0, 255):
+            pygame.event.get()
             self.fade.set_alpha(alpha)
             self.screen.blit(self.intro_credits_surf, self.intro_credits_rect)
             self.screen.blit(self.intro_credits_2_surf, self.intro_credits_2_rect)
@@ -172,6 +177,7 @@ class Game():
         )
 
         for alpha in range(255, 0, -1):
+            pygame.event.get()
             self.fade.set_alpha(alpha)
             self.screen.blit(self.intro_credits_surf, self.intro_credits_rect)
             self.screen.blit(self.fade, (0, 0))
@@ -179,6 +185,7 @@ class Game():
             pygame.time.delay(18)
         
         for alpha in range(0, 255):
+            pygame.event.get()
             self.fade.set_alpha(alpha)
             self.screen.blit(self.intro_credits_surf, self.intro_credits_rect)
             self.screen.blit(self.fade, (0, 0))
@@ -186,6 +193,7 @@ class Game():
             pygame.time.delay(18)
         
         for alpha in range(255, 0, -1):
+            pygame.event.get()
             self.fade.set_alpha(alpha)
             self.render_menu()
             self.screen.blit(self.fade, (0, 0))
