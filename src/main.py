@@ -9,6 +9,8 @@ def main():
     clock = pygame.time.Clock()
     FPS = 60
 
+    game.fade_menu()
+
     while True:
 
         # Laço para controlar o input do usuário
