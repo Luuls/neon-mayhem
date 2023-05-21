@@ -1,7 +1,11 @@
 import pygame
 
+from states.state import State
+import states.menu_state as menu_state
 from utility.utils import get_assets_path
-from game import game_constants
+
+import game.game_constants as game_constants
+
 from entities.blast import Blast
 from entities.shield import Shield
 from entities.player import Player
@@ -65,15 +69,9 @@ class Game():
         pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
         pygame.mixer.music.play()
 
-        # Controle da tela do jogo
-        self.states = {
-            'MENU': self.render_menu,
-            'LEVEL': self.render_level
-            # 'GAMEOVER': 2
-        }
-
-        self.current_state = 'MENU'
-        self.render_state_screen = self.states[self.current_state]
+        self.current_state: State = menu_state.MenuState(self)
+        self.current_state.entering()
+        # self.render_state_screen = self.states[self.current_state]
 
         # cria as entidades do jogo e inicializa o escudo
         self.player = Player()
@@ -83,46 +81,56 @@ class Game():
         self.blast_list = []
 
 
+    def run(self):
+        # Inicia o clock e define a taxa de frames
+        clock = pygame.time.Clock()
+        FPS = 60
+
+        while True:
+
+            # Laço para controlar o input do usuário
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+                    pygame.quit()
+                    exit()
+
+                # Dispara a condição para iniciar o level
+                if self.get_current_state() == 'MENU':
+                    pass
+
+                if self.get_current_state() == 'LEVEL':
+                    if event.type == self.blast_timer:
+                        self.spawn_blast()
+                        
+                    if event.type == pygame.KEYDOWN:
+                        if event.key == pygame.K_UP:
+                            self.player.shield.update_shield_lane('UP')
+                            
+                        if event.key == pygame.K_DOWN:
+                            self.player.shield.update_shield_lane('DOWN')
+                            
+                        if event.key == pygame.K_LEFT:
+                            self.player.shield.update_shield_lane('LEFT')
+                            
+                        if event.key == pygame.K_RIGHT:
+                            self.player.shield.update_shield_lane('RIGHT')
+            # Controle do que é exibido na tela no estado atual
+            self.render_screen()
+            clock.tick(FPS)
+        
+        
     def get_current_state(self) -> str:
         return self.current_state
 
-    def set_current_state(self, new_state: str) -> None:
+    def set_state(self, new_state: State) -> None:
+        self.current_state.exiting()
         self.current_state = new_state
-        self.render_state_screen = self.states[self.current_state]
+        self.current_state.entering()
         
     def render_screen(self) -> None:
-        self.render_state_screen()
+        self.current_state.render()
         pygame.display.flip()
     
-    def render_menu(self):
-        self.screen.blit(self.menu_surface, (0, 0))
-
-        self.screen.blit(self.title_surface, self.title_rect)
-        self.screen.blit(self.subtitle_surface, self.subtitle_rect)
-        self.screen.blit(self.copyright_surface, self.copyright_rect)
-
-    def render_level(self):
-        self.screen.blit(self.level_surface, (0, 0))
-        
-        self.screen.blit(self.player.shield.shield_sprite, self.player.shield.shield_rect)
-        self.player.draw_at(self.screen)
-
-        eliminated = []
-                
-        for i in range(len(self.blast_list)):
-            self.blast_list[i].draw_at(self.screen)
-            self.blast_list[i].update_position()
-
-            if self.blast_list[i].blast_rect.colliderect(self.player.rect):
-                print('Você foi atingido!')
-                eliminated.append(self.blast_list[i])
-                    
-            elif self.blast_list[i].blast_rect.colliderect(self.player.shield.shield_rect):
-                eliminated.append(self.blast_list[i])
-
-        self.blast_list = [x for x in self.blast_list if x not in eliminated]
-
     def spawn_blast(self):
-        
         new_blast = Blast('Blue', 10)
         self.blast_list.append(new_blast)
