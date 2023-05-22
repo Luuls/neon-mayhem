@@ -57,5 +57,6 @@ class LevelState(state.State):
             elif key == pygame.K_LEFT:
                 self.game.player.shield.update_shield_lane('LEFT')
                 
+
             elif key == pygame.K_RIGHT:
                 self.game.player.shield.update_shield_lane('RIGHT')
