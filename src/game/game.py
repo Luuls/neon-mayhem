@@ -2,6 +2,8 @@ import pygame
 
 from states.state import State
 import states.menu_state as menu_state
+import subjects.clock_subject as clock_subject
+
 from utility.utils import get_assets_path
 
 import game.game_constants as game_constants
@@ -69,9 +71,11 @@ class Game():
         pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
         pygame.mixer.music.play()
 
+
         self.current_state: State = menu_state.MenuState(self)
         self.current_state.entering()
-        # self.render_state_screen = self.states[self.current_state]
+
+        self.keyboard_listener = clock_subject.KeyBoardListener(self.current_state.update)
 
         # cria as entidades do jogo e inicializa o escudo
         self.player = Player()
@@ -87,33 +91,24 @@ class Game():
         FPS = 60
 
         while True:
+            self.keyboard_listener.handle_events()
 
-            # Laço para controlar o input do usuário
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
-                    pygame.quit()
-                    exit()
-
-                # Dispara a condição para iniciar o level
-                if self.get_current_state() == 'MENU':
-                    pass
-
-                if self.get_current_state() == 'LEVEL':
-                    if event.type == self.blast_timer:
-                        self.spawn_blast()
+            # if self.get_current_state() == 'LEVEL':
+            #     if event.type == self.blast_timer:
+            #         self.spawn_blast()
+                    
+            #     if event.type == pygame.KEYDOWN:
+            #         if event.key == pygame.K_UP:
+            #             self.player.shield.update_shield_lane('UP')
                         
-                    if event.type == pygame.KEYDOWN:
-                        if event.key == pygame.K_UP:
-                            self.player.shield.update_shield_lane('UP')
-                            
-                        if event.key == pygame.K_DOWN:
-                            self.player.shield.update_shield_lane('DOWN')
-                            
-                        if event.key == pygame.K_LEFT:
-                            self.player.shield.update_shield_lane('LEFT')
-                            
-                        if event.key == pygame.K_RIGHT:
-                            self.player.shield.update_shield_lane('RIGHT')
+            #         if event.key == pygame.K_DOWN:
+            #             self.player.shield.update_shield_lane('DOWN')
+                        
+            #         if event.key == pygame.K_LEFT:
+            #             self.player.shield.update_shield_lane('LEFT')
+                        
+            #         if event.key == pygame.K_RIGHT:
+            #             self.player.shield.update_shield_lane('RIGHT')
             # Controle do que é exibido na tela no estado atual
             self.render_screen()
             clock.tick(FPS)
@@ -124,7 +119,9 @@ class Game():
 
     def set_state(self, new_state: State) -> None:
         self.current_state.exiting()
+        self.keyboard_listener.unsubscribe(self.current_state.update)
         self.current_state = new_state
+        self.keyboard_listener.subscribe(new_state.update)
         self.current_state.entering()
         
     def render_screen(self) -> None:

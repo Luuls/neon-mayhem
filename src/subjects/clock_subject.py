@@ -6,14 +6,18 @@ import subjects.subject as subject
 import pygame
 
 class KeyBoardListener(subject.Subject):
-    def __init__(self, *observers_callbacks: tuple[Callable]):
+    # Callable é um tipo de objeto que pode ser chamado.
+    # isto é: uma função
+    def __init__(self, observer_callback: Callable):
         self.keys_pressed = None
-        self.accepted_events: list[int] = [pygame.KEYDOWN]
+        self.accepted_events: list[pygame.event.Event] = [pygame.KEYDOWN]
         self.observers: list[Callable] = []
-        self.subscribe(observers_callbacks)
+        print(observer_callback)
+        self.subscribe(observer_callback)
         
-    def subscribe(self, *observers_callbacks: tuple[Callable]):
-        self.observers += observers_callbacks
+    def subscribe(self, observer_callback: tuple[Callable]):
+        self.observers.append(observer_callback)
+        print(self.observers)
 
     def unsubscribe(self, observer_callback: Callable):
         self.observers.remove(observer_callback)
@@ -24,4 +28,5 @@ class KeyBoardListener(subject.Subject):
 
     def handle_events(self):
         self.keys_pressed = pygame.event.get(self.accepted_events)
-        self.notify_all()
+        if len(self.keys_pressed) > 0:
+            self.notify_all()

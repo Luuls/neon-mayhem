@@ -23,9 +23,10 @@ class MenuState(state.State):
         self.game.screen.blit(self.game.subtitle_surface, self.game.subtitle_rect)
         self.game.screen.blit(self.game.copyright_surface, self.game.copyright_rect)
     
-    def update(self, keys: list[int]):
-        if keys == pygame.K_RETURN:
-            self.game.set_state(level_state.LevelState(self.game))
+    def update(self, keys_pressed: list[pygame.event.Event]):
+        for key_pressed in keys_pressed:
+            if key_pressed.key == pygame.K_RETURN:
+                self.game.set_state(level_state.LevelState(self.game))
 
     def handle_input(self):
         pass
