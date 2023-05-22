@@ -8,32 +8,27 @@ class Shield():
 
     # adicionar o parâmetro lane depois, talvez
     def __init__(self):
-         
         assets_path = get_assets_path(__file__)
         self.sprite = image.load(f'{assets_path}/sprites/shield_sprite.png').convert_alpha()
-
+        self.lane = 'UP'
     
     def update_shield_lane(self, lane):
-
-        self.lane = lane
-
         if self.lane == 'RIGHT':
             self.shield_sprite = transform.rotozoom(self.sprite, 0 , 0.06)
             self.shield_rect = self.shield_sprite.get_rect()
             self.shield_rect.center = (game_constants.SCREEN_WIDTH / 2 + 120, game_constants.SCREEN_HEIGHT / 2)
 
-
-        if self.lane == 'LEFT':
+        elif self.lane == 'LEFT':
             self.shield_sprite = transform.rotozoom(self.sprite, 0 , 0.06)
             self.shield_rect = self.shield_sprite.get_rect()
             self.shield_rect.center = (game_constants.SCREEN_WIDTH / 2 - 120, game_constants.SCREEN_HEIGHT / 2)
 
-        if self.lane == 'UP':
+        elif self.lane == 'UP':
             self.shield_sprite = transform.rotozoom(self.sprite, 90 , 0.06)
             self.shield_rect = self.shield_sprite.get_rect()
             self.shield_rect.center = (game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 - 120)
 
-        if self.lane == 'DOWN':
+        elif self.lane == 'DOWN':
             self.shield_sprite = transform.rotozoom(self.sprite, 90 , 0.06)
             self.shield_rect = self.shield_sprite.get_rect()
             self.shield_rect.center = (game_constants.SCREEN_WIDTH / 2 + 10, game_constants.SCREEN_HEIGHT / 2 + 120)

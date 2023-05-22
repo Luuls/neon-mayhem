@@ -4,6 +4,7 @@ import states.state as state
 import states.menu_state as menu_state
 
 import game.game as game
+import entities.player as player
 
 import pygame
 import sys
@@ -14,6 +15,8 @@ class LevelState(state.State):
 
     def entering(self):
         print(f'ENTERING {self.__class__.__name__}')
+        self.player = player.Player()
+        self.player.shield.update_shield_lane('UP')
 
     def exiting(self):
         print(f'EXITING {self.__class__.__name__}')
@@ -21,8 +24,8 @@ class LevelState(state.State):
     def render(self):
         self.game.screen.blit(self.game.level_surface, (0, 0))
         
-        self.game.screen.blit(self.game.player.shield.shield_sprite, self.game.player.shield.shield_rect)
-        self.game.player.draw_at(self.game.screen)
+        self.game.screen.blit(self.player.shield.shield_sprite, self.player.shield.shield_rect)
+        self.player.draw_at(self.game.screen)
 
         eliminated = []
                 
@@ -48,15 +51,3 @@ class LevelState(state.State):
             elif key == pygame.K_m:
                 self.game.set_state(menu_state.MenuState(self.game))
             
-            elif key == pygame.K_UP:
-                self.game.player.shield.update_shield_lane('UP')
-                
-            elif key == pygame.K_DOWN:
-                self.game.player.shield.update_shield_lane('DOWN')
-                
-            elif key == pygame.K_LEFT:
-                self.game.player.shield.update_shield_lane('LEFT')
-                
-
-            elif key == pygame.K_RIGHT:
-                self.game.player.shield.update_shield_lane('RIGHT')

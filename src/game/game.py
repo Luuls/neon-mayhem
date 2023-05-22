@@ -80,8 +80,6 @@ class Game():
         )
 
         # cria as entidades do jogo e inicializa o escudo
-        self.player = Player()
-        self.player.shield.update_shield_lane('UP')
 
         # inicia a lista do do blast
         self.blast_list = []
@@ -90,18 +88,11 @@ class Game():
     def run(self):
         # Inicia o clock e define a taxa de frames
         clock = pygame.time.Clock()
-        FPS = 60
 
         while True:
             self.keyboard_listener.handle_events()
-
-            # if self.get_current_state() == 'LEVEL':
-            #     if event.type == self.blast_timer:
-            #         self.spawn_blast()
-                    
-            # Controle do que é exibido na tela no estado atual
             self.render_screen()
-            clock.tick(FPS)
+            clock.tick(game_constants.FPS)
         
         
     def get_current_state(self) -> str:
