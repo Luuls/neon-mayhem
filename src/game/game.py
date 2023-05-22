@@ -2,7 +2,7 @@ import pygame
 
 from states.state import State
 import states.menu_state as menu_state
-import subjects.clock_subject as clock_subject
+import subjects.keyboard_subject as keyboard_subject
 
 from utility.utils import get_assets_path
 
@@ -75,7 +75,7 @@ class Game():
         self.current_state: State = menu_state.MenuState(self)
         self.current_state.entering()
 
-        self.keyboard_listener = clock_subject.KeyBoardListener(self.current_state.update)
+        self.keyboard_listener = keyboard_subject.KeyBoardSubject(self.current_state.update)
 
         # cria as entidades do jogo e inicializa o escudo
         self.player = Player()

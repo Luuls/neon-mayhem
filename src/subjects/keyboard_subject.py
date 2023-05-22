@@ -5,7 +5,7 @@ import subjects.subject as subject
 
 import pygame
 
-class KeyBoardListener(subject.Subject):
+class KeyBoardSubject(subject.Subject):
     # Callable é um tipo de objeto que pode ser chamado.
     # isto é: uma função
     def __init__(self, observer_callback: Callable):
