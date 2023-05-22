@@ -23,8 +23,9 @@ class KeyBoardSubject(subject.Subject):
         self.observers.remove(observer_callback)
 
     def notify_all(self):
+        keys_pressed_codes = [event.key for event in self.keys_pressed]
         for callback in self.observers:
-            callback(self.keys_pressed)
+            callback(keys_pressed_codes)
 
     def handle_events(self):
         self.keys_pressed = pygame.event.get(self.accepted_events)

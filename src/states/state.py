@@ -11,15 +11,14 @@ class State(ABC):
     def render(self) -> None:
         pass
 
+    @abstractmethod
     def update(self, event) -> None:
         pass
 
     @abstractmethod
-    def handle_input(self) -> None:
+    def entering(self) -> None:
         pass
 
-    def entering(self) -> None:
-        print(f'ENTERING {self.__class__.__name__} STATE')
-
+    @abstractmethod
     def exiting(self) -> None:
-        print(f'EXITING {self.__class__.__name__} STATE')
+        pass

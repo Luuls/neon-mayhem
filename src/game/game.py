@@ -75,7 +75,9 @@ class Game():
         self.current_state: State = menu_state.MenuState(self)
         self.current_state.entering()
 
-        self.keyboard_listener = keyboard_subject.KeyBoardSubject(self.current_state.update)
+        self.keyboard_listener = keyboard_subject.KeyBoardSubject(
+            self.current_state.update
+        )
 
         # cria as entidades do jogo e inicializa o escudo
         self.player = Player()
@@ -97,18 +99,6 @@ class Game():
             #     if event.type == self.blast_timer:
             #         self.spawn_blast()
                     
-            #     if event.type == pygame.KEYDOWN:
-            #         if event.key == pygame.K_UP:
-            #             self.player.shield.update_shield_lane('UP')
-                        
-            #         if event.key == pygame.K_DOWN:
-            #             self.player.shield.update_shield_lane('DOWN')
-                        
-            #         if event.key == pygame.K_LEFT:
-            #             self.player.shield.update_shield_lane('LEFT')
-                        
-            #         if event.key == pygame.K_RIGHT:
-            #             self.player.shield.update_shield_lane('RIGHT')
             # Controle do que é exibido na tela no estado atual
             self.render_screen()
             clock.tick(FPS)
