@@ -8,12 +8,10 @@ import pygame
 class KeyBoardSubject(subject.Subject):
     # Callable é um tipo de objeto que pode ser chamado.
     # isto é: uma função
-    def __init__(self, observer_callback: Callable):
+    def __init__(self):
         self.keys_pressed = None
         self.accepted_events: list[pygame.event.Event] = [pygame.KEYDOWN]
         self.observers: list[Callable] = []
-        print(observer_callback)
-        self.subscribe(observer_callback)
         
     def subscribe(self, observer_callback: tuple[Callable]):
         self.observers.append(observer_callback)

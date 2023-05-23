@@ -13,9 +13,12 @@ class MenuState(state.State):
 
     def entering(self):
         print(f'ENTERING {self.__class__.__name__}')
+        self.game.keyboard_listener.subscribe(self.update)
+        pygame.mixer.music.play()
 
     def exiting(self):
         print(f'EXITING {self.__class__.__name__}')
+        self.game.keyboard_listener.unsubscribe(self.update)
         pygame.mixer.music.stop()
 
     def render(self):
@@ -34,6 +37,3 @@ class MenuState(state.State):
 
             elif key == pygame.K_RETURN:
                 self.game.set_state(level_state.LevelState(self.game))
-
-    def handle_input(self):
-        pass
