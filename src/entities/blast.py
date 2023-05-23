@@ -2,7 +2,7 @@ from pygame import Surface, image, transform
 import random
 
 from utility.utils import get_assets_path
-import game.game_constants as game_constants
+import constants.game_constants as game_constants
 
 # Classe dos projéteis
 class Blast():

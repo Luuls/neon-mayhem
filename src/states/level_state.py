@@ -16,16 +16,22 @@ class LevelState(state.State):
     def entering(self):
         print(f'ENTERING {self.__class__.__name__}')
         self.player = player.Player()
-        self.player.shield.update_shield_lane('UP')
+        self.player.shield.move_shield('UP')
+
+        self.game.keyboard_listener.subscribe(self.player.update)
+        self.game.keyboard_listener.subscribe(self.update)
 
     def exiting(self):
         print(f'EXITING {self.__class__.__name__}')
+        self.game.keyboard_listener.unsubscribe(self.player.update)
+        self.game.keyboard_listener.unsubscribe(self.update)
 
     def render(self):
         self.game.screen.blit(self.game.level_surface, (0, 0))
         
-        self.game.screen.blit(self.player.shield.shield_sprite, self.player.shield.shield_rect)
+        self.game.screen.blit(self.player.shield.sprite, self.player.shield.rect)
         self.player.draw_at(self.game.screen)
+        self.player.shield.draw_at(self.game.screen)
 
         eliminated = []
                 

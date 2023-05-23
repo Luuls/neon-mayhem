@@ -6,15 +6,11 @@ import subjects.keyboard_subject as keyboard_subject
 
 from utility.utils import get_assets_path
 
-import game.game_constants as game_constants
+from constants import game_constants
 
 from entities.blast import Blast
-from entities.shield import Shield
-from entities.player import Player
 
 class Game():
-    
-
     def __init__(self):
         pygame.init()
 
@@ -69,21 +65,14 @@ class Game():
         # Inicializa trilha sonora do menu
         pygame.mixer.music.load(f'{assets_path}/songs/menu_track.mp3')
         pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
-        pygame.mixer.music.play()
 
+        self.keyboard_listener = keyboard_subject.KeyBoardSubject()
 
         self.current_state: State = menu_state.MenuState(self)
         self.current_state.entering()
 
-        self.keyboard_listener = keyboard_subject.KeyBoardSubject(
-            self.current_state.update
-        )
-
-        # cria as entidades do jogo e inicializa o escudo
-
         # inicia a lista do do blast
         self.blast_list = []
-
 
     def run(self):
         # Inicia o clock e define a taxa de frames
@@ -100,9 +89,7 @@ class Game():
 
     def set_state(self, new_state: State) -> None:
         self.current_state.exiting()
-        self.keyboard_listener.unsubscribe(self.current_state.update)
         self.current_state = new_state
-        self.keyboard_listener.subscribe(new_state.update)
         self.current_state.entering()
         
     def render_screen(self) -> None:

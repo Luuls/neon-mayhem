@@ -1,34 +1,65 @@
-from pygame import Surface, draw, Rect, image, transform
-from game import game_constants
+from __future__ import annotations
+
+import pygame
+
+from entities import player
+from constants import shield_constants
+# from game import game_constants
 from utility.utils import get_assets_path
-# game_constants.SCREEN_WIDTH = x
-# game_constants.SCREEN_HEIGHT = y
 
 class Shield():
+    def __init__(self, player_ref: player.Player):
+        self.player = player_ref
 
-    # adicionar o parâmetro lane depois, talvez
-    def __init__(self):
         assets_path = get_assets_path(__file__)
-        self.sprite = image.load(f'{assets_path}/sprites/shield_sprite.png').convert_alpha()
-        self.lane = 'UP'
-    
-    def update_shield_lane(self, lane):
-        if self.lane == 'RIGHT':
-            self.shield_sprite = transform.rotozoom(self.sprite, 0 , 0.06)
-            self.shield_rect = self.shield_sprite.get_rect()
-            self.shield_rect.center = (game_constants.SCREEN_WIDTH / 2 + 120, game_constants.SCREEN_HEIGHT / 2)
+        self.sprite = pygame.image.load(f'{assets_path}/sprites/shield_sprite.png').convert_alpha()
+        self.sprite = pygame.transform.scale_by(self.sprite, (0.07, 0.1))
+        self.sprite = pygame.transform.rotate(self.sprite, 90)
 
-        elif self.lane == 'LEFT':
-            self.shield_sprite = transform.rotozoom(self.sprite, 0 , 0.06)
-            self.shield_rect = self.shield_sprite.get_rect()
-            self.shield_rect.center = (game_constants.SCREEN_WIDTH / 2 - 120, game_constants.SCREEN_HEIGHT / 2)
+        self.rect = self.sprite.get_rect()
+        self.angle = 0
+        self.move_shield('UP')
 
-        elif self.lane == 'UP':
-            self.shield_sprite = transform.rotozoom(self.sprite, 90 , 0.06)
-            self.shield_rect = self.shield_sprite.get_rect()
-            self.shield_rect.center = (game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 - 120)
+    def move_shield(self, lane):
+        if lane == 'RIGHT':
+            self.sprite = pygame.transform.rotate(self.sprite, - 90 - self.angle)
+            self.angle = -90
 
-        elif self.lane == 'DOWN':
-            self.shield_sprite = transform.rotozoom(self.sprite, 90 , 0.06)
-            self.shield_rect = self.shield_sprite.get_rect()
-            self.shield_rect.center = (game_constants.SCREEN_WIDTH / 2 + 10, game_constants.SCREEN_HEIGHT / 2 + 120)
+            self.rect = self.sprite.get_rect()
+            self.rect.center = (
+                self.player.position_x + shield_constants.DISTANCE_FROM_PLAYER, 
+                self.player.position_y
+            )
+
+        elif lane == 'LEFT':
+            self.sprite = pygame.transform.rotate(self.sprite, 90 - self.angle)
+            self.angle = 90
+
+            self.rect = self.sprite.get_rect()
+            self.rect.center = (
+                self.player.position_x - shield_constants.DISTANCE_FROM_PLAYER, 
+                self.player.position_y
+            )
+
+        elif lane == 'UP':
+            self.sprite = pygame.transform.rotate(self.sprite, 0 - self.angle)
+            self.angle = 0
+
+            self.rect = self.sprite.get_rect()
+            self.rect.center = (
+                self.player.position_x, 
+                self.player.position_y - shield_constants.DISTANCE_FROM_PLAYER
+            )
+
+        elif lane == 'DOWN':
+            self.sprite = pygame.transform.rotate(self.sprite, 180 - self.angle)
+            self.angle = 180
+
+            self.rect = self.sprite.get_rect()
+            self.rect.center = (
+                self.player.position_x, 
+                self.player.position_y + shield_constants.DISTANCE_FROM_PLAYER
+            )
+
+    def draw_at(self, screen: pygame.Surface):
+        screen.blit(self.sprite, self.rect)
