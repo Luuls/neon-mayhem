@@ -29,7 +29,6 @@ class MenuState(state.State):
         self.game.screen.blit(self.game.copyright_surface, self.game.copyright_rect)
     
     def update(self, keys_pressed: list[int]):
-        print(keys_pressed)
         for key in keys_pressed:
             if key == pygame.K_ESCAPE:
                 pygame.quit()

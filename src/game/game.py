@@ -21,10 +21,6 @@ class Game():
 
         pygame.display.set_caption('Neon Mayhem')
         
-        # Inicia o timer do blast
-        self.blast_timer = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.blast_timer, 470)
-
         assets_path = get_assets_path(__file__)
         # Inicializa as imagens do menu e do level
         menu_load = pygame.image.load(f'{assets_path}/backgrounds/menu_background.jpg').convert()
@@ -66,6 +62,9 @@ class Game():
         pygame.mixer.music.load(f'{assets_path}/songs/menu_track.mp3')
         pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
 
+        # não registra nenhum evento na fila de eventos
+        pygame.event.set_blocked(None)
+
         self.keyboard_listener = keyboard_subject.KeyBoardSubject()
 
         self.current_state: State = menu_state.MenuState(self)
@@ -80,7 +79,8 @@ class Game():
 
         while True:
             self.keyboard_listener.handle_events()
-            self.render_screen()
+            self.update(self.keyboard_listener.keys_pressed)
+            self.render()
             clock.tick(game_constants.FPS)
         
         
@@ -92,10 +92,13 @@ class Game():
         self.current_state = new_state
         self.current_state.entering()
         
-    def render_screen(self) -> None:
+    def update(self, keys_pressed: list[int]):
+        self.current_state.update(keys_pressed)
+    
+    def render(self) -> None:
         self.current_state.render()
         pygame.display.flip()
     
     def spawn_blast(self):
         new_blast = Blast('Blue', 10)
-        self.blast_list.append(new_blast)
+        # self.blast_list.append(new_blast)

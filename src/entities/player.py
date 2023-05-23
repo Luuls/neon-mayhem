@@ -23,7 +23,6 @@ class Player:
         self.rect.center = (self.position_x, self.position_y)
 
     def update(self, keys_pressed: list[int]):
-        print(keys_pressed)
         for key in keys_pressed:
             if key == pygame.K_ESCAPE:
                 pygame.quit()
