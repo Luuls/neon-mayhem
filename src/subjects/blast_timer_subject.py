@@ -9,18 +9,16 @@ class BlastTimerSubject(subject.Subject):
         subject.Subject.__init__(self)
 
         # Inicia o timer do blast
-        self.BLAST_TIMER = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.BLAST_TIMER, 470)
-
-        self.accepted_events: list[pygame.event.Event] = [self.BLAST_TIMER]
-        pygame.event.set_allowed(self.accepted_events)
+        self.event_type = pygame.USEREVENT + 1
+        pygame.time.set_timer(self.event_type, 470)
 
     def notify_all(self):
         for callback in self.observers:
             callback()
 
     def handle_events(self):
-        blast_timer_events = pygame.event.get(self.accepted_events)
+        blast_timer_events = pygame.event.get(self.event_type)
         if len(blast_timer_events) > 0:
-            print('BLAST SPAWNED')
-            self.notify_all()
+            for _ in range(len(blast_timer_events)):
+                self.notify_all()
+                print('BLAST SPAWNED')

@@ -9,7 +9,7 @@ class Subject(ABC):
 
     # inscreve na lista uma função para ser chamada
     # (inscreveremos na lista funções como State.update, etc. Depende do subject)
-    def subscribe(self, observer_callback: tuple[Callable]):
+    def subscribe(self, observer_callback: Callable):
         self.observers.append(observer_callback)
         print(self.observers)
 

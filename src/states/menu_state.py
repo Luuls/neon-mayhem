@@ -14,11 +14,17 @@ class MenuState(state.State):
     def entering(self):
         print(f'ENTERING {self.__class__.__name__}')
         self.game.keyboard_listener.subscribe(self.update)
+
+        pygame.event.set_allowed(
+            [self.game.keyboard_listener.event_type]
+        )
         pygame.mixer.music.play()
 
     def exiting(self):
         print(f'EXITING {self.__class__.__name__}')
         self.game.keyboard_listener.unsubscribe(self.update)
+
+        pygame.event.set_blocked(None)
         pygame.mixer.music.stop()
 
     def render(self):

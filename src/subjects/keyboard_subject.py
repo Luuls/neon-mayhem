@@ -11,11 +11,10 @@ class KeyBoardSubject(subject.Subject):
         subject.Subject.__init__(self)
 
         self.keys_pressed = None
-        self.accepted_events: list[pygame.event.Event] = [pygame.KEYDOWN]
-        pygame.event.set_allowed(self.accepted_events)
+        self.event_type = pygame.KEYDOWN
         
     def handle_events(self):
-        self.keys_pressed = [event.key for event in pygame.event.get(self.accepted_events)]
+        self.keys_pressed = [event.key for event in pygame.event.get(self.event_type)]
         if len(self.keys_pressed) > 0:
             print(self.keys_pressed)
             self.notify_all()

@@ -22,13 +22,23 @@ class LevelState(state.State):
         self.player.shield.move_shield('UP')
 
         self.game.keyboard_listener.subscribe(self.player.update)
-        
+        pygame.event.set_blocked(None)
+        self.blast_spawner = blast_spawner.BlastSpawner(self.game)
         self.blast_timer_listener = blast_timer_subject.BlastTimerSubject()
-        self.blast_timer_listener.subscribe(blast_spawner.BlastSpawner(self.game).spawn)
+        self.blast_timer_listener.subscribe(self.blast_spawner.spawn)
+        pygame.event.set_allowed(
+            [
+                self.game.keyboard_listener.event_type,
+                self.blast_timer_listener.event_type
+            ]
+        )
 
     def exiting(self):
         print(f'EXITING {self.__class__.__name__}')
         self.game.keyboard_listener.unsubscribe(self.player.update)
+        self.blast_timer_listener.unsubscribe(self.blast_spawner.spawn)
+
+        pygame.event.set_blocked(None)
 
     def render(self):
         self.game.screen.blit(self.game.level_surface, (0, 0))
