@@ -17,7 +17,7 @@ class Player:
         # Carrega a imagem do player
         assets_path = get_assets_path(__file__)
         self.sprite = image.load(f'{assets_path}/sprites/player_sprite.png').convert_alpha()
-        self.sprite = transform.scale(self.sprite, (150, 150))
+        self.sprite = transform.scale(self.sprite, (75, 75))
 
         self.rect = self.sprite.get_rect()
         self.rect.center = (self.position_x, self.position_y)
