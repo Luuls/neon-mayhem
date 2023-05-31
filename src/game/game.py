@@ -24,7 +24,8 @@ class Game():
         pygame.time.set_timer(self.blast_timer, 470)
 
         assets_path = get_assets_path(__file__)
-        # Inicializa as imagens do menu e do level
+
+        # Inicializa as imagens do menu, do level e do game over
         menu_load = pygame.image.load(f'{assets_path}/backgrounds/menu_background.jpg').convert()
         self.menu_surface = pygame.transform.scale(
             menu_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
@@ -35,6 +36,10 @@ class Game():
             level_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
         )
 
+        over_load = pygame.image.load(f'{assets_path}/backgrounds/level_background.jpg').convert()
+        self.over_surface = pygame.transforma.scale(
+            over_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
+        )
         # Inicializa o texto do menu
         self.title = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
         self.title_surface = self.title.render(
@@ -68,8 +73,8 @@ class Game():
         # Controle da tela do jogo
         self.states = {
             'MENU': self.render_menu,
-            'LEVEL': self.render_level
-            # 'GAMEOVER': 2
+            'LEVEL': self.render_level,
+            'GAME OVER': self.render_game_over,
         }
 
         self.current_state = 'MENU'
