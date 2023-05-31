@@ -17,6 +17,9 @@ def main():
                 pygame.quit()
                 exit()
 
+            if event.type == game.game_timer:
+                game.render_screen()
+
             # Dispara a condição para iniciar o level
             if game.get_current_state() == 'MENU':
                 if event.type == pygame.KEYDOWN:
@@ -25,24 +28,30 @@ def main():
                         game.set_current_state('LEVEL')
             
             if game.get_current_state() == 'LEVEL':
+                if game.player.health <= 0:
+                     game.set_current_state('GAMEOVER')
+    
                 if event.type == game.blast_timer:
                     game.spawn_blast()
                     
+                    
                 if event.type == pygame.KEYDOWN:
-                    if event.key == pygame.K_UP:
+                    if event.key == pygame.K_UP or event.key == pygame.K_w:
                         game.player.shield.update_shield_lane('UP')
                         
-                    if event.key == pygame.K_DOWN:
+                    if event.key == pygame.K_DOWN or event.key == pygame.K_s:
                         game.player.shield.update_shield_lane('DOWN')
                         
-                    if event.key == pygame.K_LEFT:
+                    if event.key == pygame.K_LEFT or event.key == pygame.K_a:
                         game.player.shield.update_shield_lane('LEFT')
                         
-                    if event.key == pygame.K_RIGHT:
+                    if event.key == pygame.K_RIGHT or event.key == pygame.K_d:
                         game.player.shield.update_shield_lane('RIGHT')
+
+
         # Controle do que é exibido na tela no estado atual
-        game.render_screen()
-        clock.tick(FPS)
+        #game.render_screen()
+        #clock.tick(FPS)
         
 if __name__ == '__main__':
     main()

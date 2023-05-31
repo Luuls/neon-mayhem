@@ -19,9 +19,17 @@ class Game():
 
         pygame.display.set_caption('Neon Mayhem')
         
+        # cria as entidades do jogo e inicializa o escudo
+        self.player = Player()
+        self.player.shield.update_shield_lane('UP')
+
         # Inicia o timer do blast
         self.blast_timer = pygame.USEREVENT + 1
         pygame.time.set_timer(self.blast_timer, 470)
+
+        self.game_timer = pygame.USEREVENT + 2
+        pygame.time.set_timer(self.game_timer, 16)
+
 
         assets_path = get_assets_path(__file__)
 
@@ -57,6 +65,14 @@ class Game():
             center=(game_constants.SCREEN_WIDTH / 2, 150)
         )
 
+        self.game_over_title = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
+        self.game_over_title_surface = self.game_over_title.render(
+            'GAME OVER', True, '#01bfff'
+        )
+        self.game_over_title_rect = self.game_over_title_surface.get_rect(
+            center=(game_constants.SCREEN_WIDTH / 2, 50)
+        )
+
         self.copyright = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 17)
         self.copyright_surface = self.copyright.render(
             '2023 Nemesis Game Co. Published by M. R. Zatelli. All rights reserved.', True, 'White'
@@ -65,6 +81,9 @@ class Game():
             bottomleft=(20, 702)
         )
 
+        # texto do numero de vidas
+        self.lives_text = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 25)
+    
         # Inicializa trilha sonora do menu
         pygame.mixer.music.load(f'{assets_path}/songs/menu_track.mp3')
         pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
@@ -79,10 +98,6 @@ class Game():
 
         self.current_state = 'MENU'
         self.render_state_screen = self.states[self.current_state]
-
-        # cria as entidades do jogo e inicializa o escudo
-        self.player = Player()
-        self.player.shield.update_shield_lane('UP')
 
         # inicia a lista do do blast
         self.blast_list = []
@@ -112,6 +127,16 @@ class Game():
         self.screen.blit(self.player.shield.shield_sprite, self.player.shield.shield_rect)
         self.player.draw_at(self.screen)
 
+        self.lives_text_surface = self.lives_text.render(
+            f'Lives: {self.player.health}', True, 'White'
+        )
+        self.lives_text_rect = self.lives_text_surface.get_rect(
+            bottomleft=(40, 702)
+        )
+
+
+        self.screen.blit(self.lives_text_surface, self.lives_text_rect)        
+
         eliminated = []
                 
         for i in range(len(self.blast_list)):
@@ -119,13 +144,17 @@ class Game():
             self.blast_list[i].update_position()
 
             if self.blast_list[i].blast_rect.colliderect(self.player.rect):
-                print('Você foi atingido!')
+                self.player.damage()
                 eliminated.append(self.blast_list[i])
                     
             elif self.blast_list[i].blast_rect.colliderect(self.player.shield.shield_rect):
                 eliminated.append(self.blast_list[i])
 
         self.blast_list = [x for x in self.blast_list if x not in eliminated]
+
+    def render_game_over(self):
+        
+        self.screen.blit(self.game_over_title_surface, self.game_over_title_rect)
 
     def spawn_blast(self):
         
