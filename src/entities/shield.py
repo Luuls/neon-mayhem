@@ -15,7 +15,6 @@ class Shield():
         self.sprite = pygame.image.load(f'{assets_path}/sprites/shield_sprite.png').convert_alpha()
         self.sprite = pygame.transform.scale_by(self.sprite, (0.07, 0.1))
         self.sprite = pygame.transform.rotate(self.sprite, 90)
-
         self.rect = self.sprite.get_rect()
         self.angle = 0
         self.move_shield('UP')

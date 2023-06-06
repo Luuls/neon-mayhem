@@ -26,6 +26,7 @@ class LevelState(state.State):
         self.blast_spawner = blast_spawner.BlastSpawner(self.game)
         self.blast_timer_listener = blast_timer_subject.BlastTimerSubject()
         self.blast_timer_listener.subscribe(self.blast_spawner.spawn)
+
         pygame.event.set_allowed(
             [
                 self.game.keyboard_listener.event_type,
@@ -44,26 +45,25 @@ class LevelState(state.State):
         self.game.screen.blit(self.game.level_surface, (0, 0))
         
         self.game.screen.blit(self.player.shield.sprite, self.player.shield.rect)
+
         self.player.draw_at(self.game.screen)
         self.player.shield.draw_at(self.game.screen)
-
-        eliminated = []
-                
-        for i in range(len(self.game.blast_list)):
-            self.game.blast_list[i].draw_at(self.game.screen)
-            self.game.blast_list[i].update()
-
-            # if self.game.blast_list[i].blast_rect.colliderect(self.game.player.rect):
-            #     print('Você foi atingido!')
-            #     eliminated.append(self.game.blast_list[i])
-                    
-            # elif self.game.blast_list[i].blast_rect.colliderect(self.game.player.shield.shield_rect):
-            #     eliminated.append(self.game.blast_list[i])
-
-        # self.game.blast_list = [x for x in self.game.blast_list if x not in eliminated]
+        for blast in self.game.blast_list:
+            blast.draw_at(self.game.screen)
 
     def update(self, keys_pressed: list[int]):
         self.blast_timer_listener.handle_events()
+
+        for i, blast in enumerate(self.game.blast_list):
+            blast.draw_at(self.game.screen)
+            blast.update()
+
+            if blast.rect.colliderect(self.player.rect):
+                print('Você foi atingido!')
+                del self.game.blast_list[i]
+                print(f'blast_list size: {len(self.game.blast_list)}')
+            elif blast.rect.colliderect(self.player.shield.rect):
+                del self.game.blast_list[i]
 
         for key in keys_pressed:
             if key == pygame.K_ESCAPE:

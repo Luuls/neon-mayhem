@@ -71,7 +71,7 @@ class Game():
         self.current_state.entering()
 
         # inicia a lista do do blast
-        self.blast_list = []
+        self.blast_list: list[Blast] = []
 
     def run(self):
         # Inicia o clock e define a taxa de frames
@@ -98,7 +98,3 @@ class Game():
     def render(self) -> None:
         self.current_state.render()
         pygame.display.flip()
-    
-    def spawn_blast(self):
-        new_blast = Blast('Blue', 10)
-        # self.blast_list.append(new_blast)
