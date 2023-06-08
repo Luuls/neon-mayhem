@@ -29,7 +29,8 @@ def main():
             
             if game.get_current_state() == 'LEVEL':
                 if game.player.health <= 0:
-                     game.set_current_state('GAMEOVER')
+                     game.set_current_state('GAME OVER')
+                     game.render_game_over()
     
                 if event.type == game.blast_timer:
                     game.spawn_blast()

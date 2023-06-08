@@ -44,8 +44,8 @@ class Game():
             level_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
         )
 
-        over_load = pygame.image.load(f'{assets_path}/backgrounds/level_background.jpg').convert()
-        self.over_surface = pygame.transforma.scale(
+        over_load = pygame.image.load(f'{assets_path}/backgrounds/over_background.jpg').convert()
+        self.over_surface = pygame.transform.scale(
             over_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
         )
         # Inicializa o texto do menu
@@ -70,7 +70,7 @@ class Game():
             'GAME OVER', True, '#01bfff'
         )
         self.game_over_title_rect = self.game_over_title_surface.get_rect(
-            center=(game_constants.SCREEN_WIDTH / 2, 50)
+            center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2)
         )
 
         self.copyright = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 17)
@@ -154,7 +154,9 @@ class Game():
 
     def render_game_over(self):
         
+        self.screen.blit(self.over_surface, (0, 0))
         self.screen.blit(self.game_over_title_surface, self.game_over_title_rect)
+        pygame.display.flip()
 
     def spawn_blast(self):
         
