@@ -84,6 +84,9 @@ class Game():
         # texto do numero de vidas
         self.lives_text = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 25)
     
+        self.intro_credits = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
+        self.intro_credits_2 = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
+
         # Inicializa trilha sonora do menu
         pygame.mixer.music.load(f'{assets_path}/songs/menu_track.mp3')
         pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
@@ -102,6 +105,9 @@ class Game():
         # inicia a lista do do blast
         self.blast_list = []
 
+        self.fade = pygame.Surface((game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT))
+        self.fade.fill((0, 0, 0))
+
 
     def get_current_state(self) -> str:
         return self.current_state
@@ -113,6 +119,106 @@ class Game():
     def render_screen(self) -> None:
         self.render_state_screen()
         pygame.display.flip()
+    
+    def fade_menu(self):
+
+        self.intro_credits_surf = self.intro_credits.render(
+            'NEMESIS GAME COMPANY', True, 'Grey'
+        )
+
+        self.intro_credits_rect = self.intro_credits_surf.get_rect(
+            center=(game_constants.SCREEN_WIDTH / 2, 360)
+        )
+
+        for alpha in range(255, 0, -1):
+            pygame.event.get()
+            self.fade.set_alpha(alpha)
+            self.screen.blit(self.intro_credits_surf, self.intro_credits_rect)
+            self.screen.blit(self.fade, (0, 0))
+            pygame.display.flip()
+            pygame.time.delay(18)
+        
+        for alpha in range(0, 255):
+            pygame.event.get()
+            self.fade.set_alpha(alpha)
+            self.screen.blit(self.intro_credits_surf, self.intro_credits_rect)
+            self.screen.blit(self.fade, (0, 0))
+            pygame.display.flip()
+            pygame.time.delay(18)
+        
+        self.intro_credits_surf = self.intro_credits.render(
+            'IN ASSOCIATION WITH', True, 'Grey'
+        )
+
+        self.intro_credits_rect = self.intro_credits_surf.get_rect(
+            center=(game_constants.SCREEN_WIDTH / 2, 280)
+        )
+
+        for alpha in range(255, 0, -1):
+            pygame.event.get()
+            self.fade.set_alpha(alpha)
+            self.screen.blit(self.intro_credits_surf, self.intro_credits_rect)
+            self.screen.blit(self.fade, (0, 0))
+            pygame.display.flip()
+            pygame.time.delay(18)
+        
+        self.intro_credits_2_surf = self.intro_credits_2.render(
+            'M. R. Zatelli and UFSC', True, 'Grey'
+        )
+
+        self.intro_credits_2_rect = self.intro_credits_2_surf.get_rect(
+            center=(game_constants.SCREEN_WIDTH / 2, 390)
+        )
+
+        for alpha in range(255, 0, -1):
+            pygame.event.get()
+            self.fade.set_alpha(alpha)
+            self.screen.blit(self.intro_credits_surf, self.intro_credits_rect)
+            self.screen.blit(self.intro_credits_2_surf, self.intro_credits_2_rect)
+            self.screen.blit(self.fade, (0, 300))
+            pygame.display.flip()
+            pygame.time.delay(18)
+        
+        for alpha in range(0, 255):
+            pygame.event.get()
+            self.fade.set_alpha(alpha)
+            self.screen.blit(self.intro_credits_surf, self.intro_credits_rect)
+            self.screen.blit(self.intro_credits_2_surf, self.intro_credits_2_rect)
+            self.screen.blit(self.fade, (0, 0))
+            pygame.display.flip()
+            pygame.time.delay(18)
+
+        self.intro_credits_surf = self.intro_credits.render(
+            'PRESENT', True, 'Grey'
+        )
+
+        self.intro_credits_rect = self.intro_credits_surf.get_rect(
+            center=(game_constants.SCREEN_WIDTH / 2, 360)
+        )
+
+        for alpha in range(255, 0, -1):
+            pygame.event.get()
+            self.fade.set_alpha(alpha)
+            self.screen.blit(self.intro_credits_surf, self.intro_credits_rect)
+            self.screen.blit(self.fade, (0, 0))
+            pygame.display.flip()
+            pygame.time.delay(18)
+        
+        for alpha in range(0, 255):
+            pygame.event.get()
+            self.fade.set_alpha(alpha)
+            self.screen.blit(self.intro_credits_surf, self.intro_credits_rect)
+            self.screen.blit(self.fade, (0, 0))
+            pygame.display.flip()
+            pygame.time.delay(18)
+        
+        for alpha in range(255, 0, -1):
+            pygame.event.get()
+            self.fade.set_alpha(alpha)
+            self.render_menu()
+            self.screen.blit(self.fade, (0, 0))
+            pygame.display.flip()
+            pygame.time.delay(18)
     
     def render_menu(self):
         self.screen.blit(self.menu_surface, (0, 0))
