@@ -27,6 +27,7 @@ def main():
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:
                         pygame.mixer.music.stop()
+                        game.fade_level()
                         game.set_current_state('LEVEL')
             
             if game.get_current_state() == 'LEVEL':

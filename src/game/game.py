@@ -264,6 +264,24 @@ class Game():
         self.screen.blit(self.game_over_title_surface, self.game_over_title_rect)
         pygame.display.flip()
 
+    def fade_level(self):
+
+        for alpha in range(0, 255):
+            pygame.event.get()
+            self.fade.set_alpha(alpha)
+            self.render_menu()
+            self.screen.blit(self.fade, (0, 0))
+            pygame.display.flip()
+            pygame.time.delay(18)
+
+        for alpha in range(255, 0, -1):
+            pygame.event.get()
+            self.fade.set_alpha(alpha)
+            self.render_level()
+            self.screen.blit(self.fade, (0, 0))
+            pygame.display.flip()
+            pygame.time.delay(18)
+
     def spawn_blast(self):
         
         new_blast = Blast('Blue', 10)
