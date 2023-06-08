@@ -43,13 +43,13 @@ class Blast():
     def update_position(self):
 
         if self.lane == 1:
-            self.blast_rect.y += self.speed
+            self.blast_rect.y += self.speed / 1.75
     
         elif self.lane == 2:
             self.blast_rect.x -= self.speed
         
         elif self.lane == 3:
-            self.blast_rect.y -= self.speed
+            self.blast_rect.y -= self.speed / 1.75
         
         elif self.lane == 4:
             self.blast_rect.x += self.speed

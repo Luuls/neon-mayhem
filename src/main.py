@@ -39,6 +39,7 @@ def main():
                      game.render_game_over()
     
                 if event.type == game.blast_timer:
+                    game.blast_base_speed += game.speed_increment
                     game.spawn_blast()
                     
                     

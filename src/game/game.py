@@ -3,7 +3,6 @@ import pygame
 from utility.utils import get_assets_path
 from game import game_constants
 from entities.blast import Blast
-from entities.shield import Shield
 from entities.player import Player
 
 class Game():
@@ -30,6 +29,8 @@ class Game():
         self.game_timer = pygame.USEREVENT + 2
         pygame.time.set_timer(self.game_timer, 16)
 
+        self.blast_base_speed = 7
+        self.speed_increment = 0.0236
 
         self.assets_path = get_assets_path(__file__)
 
@@ -308,5 +309,5 @@ class Game():
 
     def spawn_blast(self):
         
-        new_blast = Blast('Blue', 10)
+        new_blast = Blast('Blue', self.blast_base_speed)
         self.blast_list.append(new_blast)
