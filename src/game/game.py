@@ -31,64 +31,64 @@ class Game():
         pygame.time.set_timer(self.game_timer, 16)
 
 
-        assets_path = get_assets_path(__file__)
+        self.assets_path = get_assets_path(__file__)
 
         # Inicializa as imagens do menu, do level e do game over
-        menu_load = pygame.image.load(f'{assets_path}/backgrounds/menu_background.jpg').convert()
-        self.menu_surface = pygame.transform.scale(
+        menu_load = pygame.image.load(f'{self.assets_path}/backgrounds/menu_background.jpg').convert()
+        self.menu_surf = pygame.transform.scale(
             menu_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
         )
         
-        level_load = pygame.image.load(f'{assets_path}/backgrounds/level_background.jpg').convert()
-        self.level_surface = pygame.transform.scale(
+        level_load = pygame.image.load(f'{self.assets_path}/backgrounds/level_background.jpg').convert()
+        self.level_surf = pygame.transform.scale(
             level_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
         )
 
-        over_load = pygame.image.load(f'{assets_path}/backgrounds/over_background.jpg').convert()
-        self.over_surface = pygame.transform.scale(
+        over_load = pygame.image.load(f'{self.assets_path}/backgrounds/over_background.jpg').convert()
+        self.over_surf = pygame.transform.scale(
             over_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
         )
         # Inicializa o texto do menu
-        self.title = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
-        self.title_surface = self.title.render(
+        self.title = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 70)
+        self.title_surf = self.title.render(
             'NEON MAYHEM', True, '#01bfff'
         )
-        self.title_rect = self.title_surface.get_rect(
+        self.title_rect = self.title_surf.get_rect(
             center=(game_constants.SCREEN_WIDTH / 2, 50)
         )
 
         self.subtitle = self.title
-        self.subtitle_surface = self.subtitle.render(
+        self.subtitle_surf = self.subtitle.render(
             'Press ENTER to play', True, '#01bfff'
         )
-        self.subtitle_rect = self.subtitle_surface.get_rect(
+        self.subtitle_rect = self.subtitle_surf.get_rect(
             center=(game_constants.SCREEN_WIDTH / 2, 150)
         )
 
-        self.game_over_title = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
-        self.game_over_title_surface = self.game_over_title.render(
+        self.game_over_title = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 70)
+        self.game_over_title_surf = self.game_over_title.render(
             'GAME OVER', True, '#01bfff'
         )
-        self.game_over_title_rect = self.game_over_title_surface.get_rect(
+        self.game_over_title_rect = self.game_over_title_surf.get_rect(
             center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2)
         )
 
-        self.copyright = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 17)
-        self.copyright_surface = self.copyright.render(
+        self.copyright = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 17)
+        self.copyright_surf = self.copyright.render(
             '2023 Nemesis Game Co. Published by M. R. Zatelli. All rights reserved.', True, 'White'
         )
-        self.copyright_rect = self.copyright_surface.get_rect(
+        self.copyright_rect = self.copyright_surf.get_rect(
             bottomleft=(20, 702)
         )
 
         # texto do numero de vidas
-        self.lives_text = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 25)
+        self.lives_text = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 25)
     
-        self.intro_credits = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
-        self.intro_credits_2 = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
+        self.intro_credits = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 70)
+        self.intro_credits_2 = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 70)
 
         # Inicializa trilha sonora do menu
-        pygame.mixer.music.load(f'{assets_path}/songs/menu_track.mp3')
+        pygame.mixer.music.load(f'{self.assets_path}/songs/menu_track.mp3')
         pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
         pygame.mixer.music.play()
 
@@ -245,27 +245,27 @@ class Game():
             pygame.time.delay(18)
     
     def render_menu(self):
-        self.screen.blit(self.menu_surface, (0, 0))
+        self.screen.blit(self.menu_surf, (0, 0))
 
-        self.screen.blit(self.title_surface, self.title_rect)
-        self.screen.blit(self.subtitle_surface, self.subtitle_rect)
-        self.screen.blit(self.copyright_surface, self.copyright_rect)
+        self.screen.blit(self.title_surf, self.title_rect)
+        self.screen.blit(self.subtitle_surf, self.subtitle_rect)
+        self.screen.blit(self.copyright_surf, self.copyright_rect)
 
     def render_level(self):
-        self.screen.blit(self.level_surface, (0, 0))
+        self.screen.blit(self.level_surf, (0, 0))
         
         self.screen.blit(self.player.shield.shield_sprite, self.player.shield.shield_rect)
         self.player.draw_at(self.screen)
 
-        self.lives_text_surface = self.lives_text.render(
+        self.lives_text_surf = self.lives_text.render(
             f'Lives: {self.player.health}', True, 'White'
         )
-        self.lives_text_rect = self.lives_text_surface.get_rect(
+        self.lives_text_rect = self.lives_text_surf.get_rect(
             bottomleft=(40, 702)
         )
 
 
-        self.screen.blit(self.lives_text_surface, self.lives_text_rect)        
+        self.screen.blit(self.lives_text_surf, self.lives_text_rect)        
 
         eliminated = []
                 
@@ -284,8 +284,8 @@ class Game():
 
     def render_game_over(self):
         
-        self.screen.blit(self.over_surface, (0, 0))
-        self.screen.blit(self.game_over_title_surface, self.game_over_title_rect)
+        self.screen.blit(self.over_surf, (0, 0))
+        self.screen.blit(self.game_over_title_surf, self.game_over_title_rect)
         pygame.display.flip()
 
     def fade_level(self):

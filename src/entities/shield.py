@@ -1,4 +1,4 @@
-from pygame import Surface, draw, Rect, image, transform
+from pygame import image, transform
 from game import game_constants
 from utility.utils import get_assets_path
 # game_constants.SCREEN_WIDTH = x

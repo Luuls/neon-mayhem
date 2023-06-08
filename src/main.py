@@ -28,11 +28,14 @@ def main():
                     if event.key == pygame.K_RETURN:
                         pygame.mixer.music.stop()
                         game.fade_level()
+                        pygame.mixer.music.load(f'{game.assets_path}/songs/level_track.mp3')
+                        pygame.mixer.music.play()
                         game.set_current_state('LEVEL')
             
             if game.get_current_state() == 'LEVEL':
                 if game.player.health <= 0:
                      game.set_current_state('GAME OVER')
+                     pygame.mixer.music.stop()
                      game.render_game_over()
     
                 if event.type == game.blast_timer:
