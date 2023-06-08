@@ -29,7 +29,7 @@ def main():
                         pygame.mixer.music.stop()
                         game.fade_level()
                         pygame.mixer.music.load(f'{game.assets_path}/songs/level_track.mp3')
-                        pygame.mixer.music.play()
+                        pygame.mixer.music.play(-1)
                         game.set_current_state('LEVEL')
             
             if game.get_current_state() == 'LEVEL':
