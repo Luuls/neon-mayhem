@@ -1,18 +1,15 @@
 from pygame import image, transform
 from game import game_constants
 from utility.utils import get_assets_path
-# game_constants.SCREEN_WIDTH = x
-# game_constants.SCREEN_HEIGHT = y
 
 class Shield():
 
-    # adicionar o parâmetro lane depois, talvez
     def __init__(self):
          
         assets_path = get_assets_path(__file__)
         self.sprite = image.load(f'{assets_path}/sprites/shield_sprite.png').convert_alpha()
 
-    
+    # Função para redesenhar o escudo conforme sua posição muda
     def update_shield_lane(self, lane):
 
         self.lane = lane

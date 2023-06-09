@@ -16,22 +16,26 @@ class Game():
             (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
         )
 
+        # Personaliza a frase na janela do jogo
         pygame.display.set_caption('Neon Mayhem')
         
-        # cria as entidades do jogo e inicializa o escudo
+        # Cria o player e inicializa o escudo
         self.player = Player()
         self.player.shield.update_shield_lane('UP')
 
-        # Inicia o timer do blast
-        self.blast_timer = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.blast_timer, 470)
-
-        self.game_timer = pygame.USEREVENT + 2
-        pygame.time.set_timer(self.game_timer, 16)
-
+        # Determina a velocidade base do blast e o incremento dela
         self.blast_base_speed = 7
         self.speed_increment = 0.0236
 
+        # Cria o timer do blast
+        self.blast_timer = pygame.USEREVENT + 1
+        pygame.time.set_timer(self.blast_timer, 470)
+
+        # Cria timer do game
+        self.game_timer = pygame.USEREVENT + 2
+        pygame.time.set_timer(self.game_timer, 16)
+
+        # Determina o caminho dos assets
         self.assets_path = get_assets_path(__file__)
 
         # Inicializa as imagens do menu, do level e do game over
@@ -49,6 +53,7 @@ class Game():
         self.over_surf = pygame.transform.scale(
             over_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
         )
+
         # Inicializa o texto do menu
         self.title = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 70)
         self.title_surf = self.title.render(
@@ -66,6 +71,7 @@ class Game():
             center=(game_constants.SCREEN_WIDTH / 2, 150)
         )
 
+        # Inicializa o texto da tela de game over
         self.game_over_title = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 70)
         self.game_over_title_surf = self.game_over_title.render(
             'GAME OVER', True, '#01bfff'
@@ -82,9 +88,10 @@ class Game():
             bottomleft=(20, 702)
         )
 
-        # texto do numero de vidas
+        # Inicializa o texto do número de vidas
         self.lives_text = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 25)
     
+        # Inicializa a fonte da animação no começo do jogo
         self.intro_credits = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 70)
         self.intro_credits_2 = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 70)
 
@@ -93,6 +100,7 @@ class Game():
         pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
         pygame.mixer.music.play()
 
+        # Inicializa os efeitos sonoros
         self.shield_impact = pygame.mixer.Sound(f'{self.assets_path}/effects/shield_impact.wav')
         self.shield_impact.set_volume(0.15)
         self.damage_sound = pygame.mixer.Sound(f'{self.assets_path}/effects/damage.wav')
@@ -108,24 +116,28 @@ class Game():
         self.current_state = 'MENU'
         self.render_state_screen = self.states[self.current_state]
 
-        # inicia a lista do do blast
+        # Inicia a lista do do blast
         self.blast_list = []
 
+        # Cria a superfície para fazer os fade-ins e outs
         self.fade = pygame.Surface((game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT))
         self.fade.fill((0, 0, 0))
 
-
+    
+    # Funções para obter o estado atual/mudar o estado atual
     def get_current_state(self) -> str:
         return self.current_state
 
     def set_current_state(self, new_state: str) -> None:
         self.current_state = new_state
         self.render_state_screen = self.states[self.current_state]
-        
+
+    # Função para renderizar a tela do estado
     def render_screen(self) -> None:
         self.render_state_screen()
         pygame.display.flip()
     
+    # Animação do começo do jogo
     def fade_menu(self):
 
         self.intro_credits_surf = self.intro_credits.render(
@@ -150,6 +162,7 @@ class Game():
         for alpha in range(0, 255):
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
+                    pygame.mixer.Sound.play(self.press_sound)
                     return
             
             self.fade.set_alpha(alpha)
@@ -169,6 +182,7 @@ class Game():
         for alpha in range(255, 0, -1):
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
+                    pygame.mixer.Sound.play(self.press_sound)
                     return
             
             self.fade.set_alpha(alpha)
@@ -188,6 +202,7 @@ class Game():
         for alpha in range(255, 0, -1):
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
+                    pygame.mixer.Sound.play(self.press_sound)
                     return
 
             self.fade.set_alpha(alpha)
@@ -200,6 +215,7 @@ class Game():
         for alpha in range(0, 255):
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
+                    pygame.mixer.Sound.play(self.press_sound)
                     return
 
             self.fade.set_alpha(alpha)
@@ -220,6 +236,7 @@ class Game():
         for alpha in range(255, 0, -1):
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
+                    pygame.mixer.Sound.play(self.press_sound)
                     return
 
             self.fade.set_alpha(alpha)
@@ -231,6 +248,7 @@ class Game():
         for alpha in range(0, 255):
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
+                    pygame.mixer.Sound.play(self.press_sound)
                     return
 
             self.fade.set_alpha(alpha)
@@ -242,6 +260,7 @@ class Game():
         for alpha in range(255, 0, -1):
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
+                    pygame.mixer.Sound.play(self.press_sound)
                     return
 
             self.fade.set_alpha(alpha)
@@ -250,6 +269,7 @@ class Game():
             pygame.display.flip()
             pygame.time.delay(18)
     
+
     def render_menu(self):
         self.screen.blit(self.menu_surf, (0, 0))
 
@@ -275,6 +295,7 @@ class Game():
 
         eliminated = []
                 
+        # Determinação de colisão do blast e atualização da posição
         for i in range(len(self.blast_list)):
             self.blast_list[i].draw_at(self.screen)
             self.blast_list[i].update_position()
@@ -289,14 +310,15 @@ class Game():
                 pygame.mixer.Sound.play(self.shield_impact)
                 eliminated.append(self.blast_list[i])
 
+        # Eliminamos os que colidiram
         self.blast_list = [x for x in self.blast_list if x not in eliminated]
 
     def render_game_over(self):
-        
         self.screen.blit(self.over_surf, (0, 0))
         self.screen.blit(self.game_over_title_surf, self.game_over_title_rect)
         pygame.display.flip()
 
+    # Transição entre o menu e o level
     def fade_level(self):
 
         for alpha in range(0, 255):
@@ -315,7 +337,7 @@ class Game():
             pygame.display.flip()
             pygame.time.delay(8)
 
+    # Função que cuida da geração de blasts
     def spawn_blast(self):
-        
         new_blast = Blast('Blue', self.blast_base_speed)
         self.blast_list.append(new_blast)

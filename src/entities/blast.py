@@ -14,6 +14,8 @@ class Blast():
         
         self.color = color
         self.speed = speed
+
+        # Designamos um caminho (lane) aleatório ao blast
         self.lane = random.randint(1, 4)
 
         if self.lane == 1:
@@ -42,6 +44,8 @@ class Blast():
         
     def update_position(self):
 
+        # Os que vêm de cima/baixo devem ser mais lentos, pois isso
+        # compensa pela sua proximidade em relação ao player.
         if self.lane == 1:
             self.blast_rect.y += self.speed / 1.75
     

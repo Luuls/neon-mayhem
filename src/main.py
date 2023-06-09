@@ -2,13 +2,10 @@ import pygame
 from game.game import Game
 
 def main():
-    # Instancia classe que iniciará o jogo
+    # Instancia classe que gerencia o jogo
     game = Game()
 
-    # Inicia o clock e define a taxa de frames
-    clock = pygame.time.Clock()
-    FPS = 60
-
+    # Aciona a animação do começo do jogo
     game.fade_menu()
 
     while True:
@@ -26,7 +23,7 @@ def main():
             if game.get_current_state() == 'MENU':
                 if event.type == pygame.KEYDOWN:
                     pygame.mixer.Sound.play(game.press_sound)
-                    
+
                     if event.key == pygame.K_RETURN:
                         pygame.mixer.music.stop()
                         game.fade_level()
@@ -35,18 +32,21 @@ def main():
                         game.set_current_state('LEVEL')
             
             if game.get_current_state() == 'LEVEL':
+                
+                # Quando a vida do player zera, terminamos o jogo.
                 if game.player.health <= 0:
                      game.set_current_state('GAME OVER')
                      pygame.mixer.music.stop()
                      gam_over_effect = pygame.mixer.Sound(f'{game.assets_path}/effects/game-over.mp3')
                      pygame.mixer.Sound.play(gam_over_effect)
                      game.render_game_over()
-    
+
+                # A cada geração de blast, a velocidade deles aumenta um pouquinho
                 if event.type == game.blast_timer:
                     game.blast_base_speed += game.speed_increment
                     game.spawn_blast()
                     
-                    
+                # Esse bloco serve para alterar a posição do escudo
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_UP or event.key == pygame.K_w:
                         game.player.shield.update_shield_lane('UP')

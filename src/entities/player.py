@@ -22,7 +22,7 @@ class Player:
         self.rect = self.sprite.get_rect()
         self.rect.center = (self.position_x, self.position_y)
         
-    # muito sujeito à mudanças, apenas uma ideia inicial
+    # Função para computar o dano ao player
     def damage(self) -> None:
         self.health -= 1
         if self.health == 0:
