@@ -36,6 +36,8 @@ def main():
                 if game.player.health <= 0:
                      game.set_current_state('GAME OVER')
                      pygame.mixer.music.stop()
+                     gam_over_effect = pygame.mixer.Sound(f'{game.assets_path}/effects/game-over.mp3')
+                     pygame.mixer.Sound.play(gam_over_effect)
                      game.render_game_over()
     
                 if event.type == game.blast_timer:
