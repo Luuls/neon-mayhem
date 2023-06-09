@@ -81,8 +81,17 @@ class Game():
         self.game_over_title_surf = self.game_over_title.render(
             'GAME OVER', True, '#01bfff'
         )
+        
+        self.game_over_retry_surf = self.game_over_title.render(
+            'PRESS ANY KEY TO CONTINUE', True, '#01bfff'
+        )
+
         self.game_over_title_rect = self.game_over_title_surf.get_rect(
-            center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2)
+            center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 - 20)
+        )
+
+        self.game_over_retry_rect = self.game_over_retry_surf.get_rect(
+            center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 + 55)
         )
 
         self.copyright = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 17)
@@ -337,9 +346,34 @@ class Game():
         self.blast_list = [x for x in self.blast_list if x not in eliminated]
 
     def render_game_over(self):
+
+        if self.player.health <= 0:
+            self.player.health = 3
+        
+        if len(self.blast_list) != 0:
+            self.blast_list.clear()
+
         self.screen.blit(self.over_surf, (0, 0))
         self.screen.blit(self.game_over_title_surf, self.game_over_title_rect)
-        pygame.display.flip()
+        self.screen.blit(self.game_over_retry_surf, self.game_over_retry_rect)
+
+    def fade_game_over(self):
+
+        for alpha in range(0, 255):
+            pygame.event.get()
+            self.fade.set_alpha(alpha)
+            self.render_game_over()
+            self.screen.blit(self.fade, (0, 0))
+            pygame.display.flip()
+            pygame.time.delay(3)
+
+        for alpha in range(255, 0, -1):
+            pygame.event.get()
+            self.fade.set_alpha(alpha)
+            self.render_menu()
+            self.screen.blit(self.fade, (0, 0))
+            pygame.display.flip()
+            pygame.time.delay(3)
 
     # Transição entre o menu e o level
     def fade_level(self):
@@ -350,7 +384,7 @@ class Game():
             self.render_menu()
             self.screen.blit(self.fade, (0, 0))
             pygame.display.flip()
-            pygame.time.delay(5)
+            pygame.time.delay(3)
 
         for alpha in range(255, 0, -1):
             pygame.event.get()
@@ -358,7 +392,7 @@ class Game():
             self.render_level()
             self.screen.blit(self.fade, (0, 0))
             pygame.display.flip()
-            pygame.time.delay(5)
+            pygame.time.delay(3)
 
     # Função que cuida da geração de blasts
     def spawn_blast(self):
