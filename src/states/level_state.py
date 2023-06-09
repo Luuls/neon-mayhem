@@ -17,7 +17,6 @@ class LevelState(state.State):
         state.State.__init__(self, game_ref)
 
     def entering(self):
-        print(f'ENTERING {self.__class__.__name__}')
         self.player = player.Player()
         self.player.shield.move_shield('UP')
 
@@ -35,7 +34,6 @@ class LevelState(state.State):
         )
 
     def exiting(self):
-        print(f'EXITING {self.__class__.__name__}')
         self.game.keyboard_listener.unsubscribe(self.player.update)
         self.blast_timer_listener.unsubscribe(self.blast_spawner.spawn)
 
@@ -59,9 +57,9 @@ class LevelState(state.State):
             blast.update()
 
             if blast.rect.colliderect(self.player.rect):
-                print('Você foi atingido!')
                 del self.game.blast_list[i]
-                print(f'blast_list size: {len(self.game.blast_list)}')
+                self.player.damage()
+                
             elif blast.rect.colliderect(self.player.shield.rect):
                 del self.game.blast_list[i]
 

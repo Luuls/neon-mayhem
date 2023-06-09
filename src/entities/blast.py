@@ -40,7 +40,6 @@ class Blast():
             self.rect = self.sprite.get_rect(center=(position_x, position_y))
         
     def update(self):
-
         if self.lane == 'UP':
             self.rect.y += self.speed
     

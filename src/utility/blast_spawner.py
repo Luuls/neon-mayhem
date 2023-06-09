@@ -10,4 +10,3 @@ class BlastSpawner:
 
     def spawn(self) -> blast.Blast:
         self.game.blast_list.append(blast.Blast(10))        
-        print(f'blast_list size: {len(self.game.blast_list)}')

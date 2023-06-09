@@ -12,7 +12,6 @@ class MenuState(state.State):
         state.State.__init__(self, game_ref)
 
     def entering(self):
-        print(f'ENTERING {self.__class__.__name__}')
         self.game.keyboard_listener.subscribe(self.update)
 
         pygame.event.set_allowed(
@@ -21,7 +20,6 @@ class MenuState(state.State):
         pygame.mixer.music.play()
 
     def exiting(self):
-        print(f'EXITING {self.__class__.__name__}')
         self.game.keyboard_listener.unsubscribe(self.update)
 
         pygame.event.set_blocked(None)

@@ -21,4 +21,3 @@ class BlastTimerSubject(subject.Subject):
         if len(blast_timer_events) > 0:
             for _ in range(len(blast_timer_events)):
                 self.notify_all()
-                print('BLAST SPAWNED')

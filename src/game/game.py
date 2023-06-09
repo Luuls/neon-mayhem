@@ -84,7 +84,7 @@ class Game():
             clock.tick(game_constants.FPS)
         
         
-    def get_current_state(self) -> str:
+    def get_current_state(self) -> State:
         return self.current_state
 
     def set_state(self, new_state: State) -> None:

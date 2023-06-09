@@ -10,13 +10,12 @@ class KeyBoardSubject(subject.Subject):
     def __init__(self):
         subject.Subject.__init__(self)
 
-        self.keys_pressed = None
+        self.keys_pressed: list[int] = []
         self.event_type = pygame.KEYDOWN
         
     def handle_events(self):
         self.keys_pressed = [event.key for event in pygame.event.get(self.event_type)]
         if len(self.keys_pressed) > 0:
-            print(self.keys_pressed)
             self.notify_all()
 
     def notify_all(self):

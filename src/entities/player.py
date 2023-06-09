@@ -8,7 +8,7 @@ import pygame
 
 class Player:
     def __init__(self):
-        self.alive = True
+        self.is_alive = True
         self.health = 3
         self.position_x = game_constants.SCREEN_WIDTH / 2
         self.position_y = game_constants.SCREEN_HEIGHT / 2
@@ -41,9 +41,13 @@ class Player:
                 self.shield.move_shield('RIGHT')
         
     def damage(self) -> None:
-        self.health -= 1
-        if self.health == 0:
+        if not self.is_alive:
+            return 
+
+        if self.health == 1:
             self.is_alive = False
+
+        self.health -= 1
 
     def draw_at(self, screen: pygame.Surface):
         screen.blit(self.sprite, self.rect)
