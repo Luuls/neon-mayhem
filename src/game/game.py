@@ -73,6 +73,9 @@ class Game():
             center=(game_constants.SCREEN_WIDTH / 2, 150)
         )
 
+        self.blink_flag = True
+        self.subtitle_alpha = 255
+
         # Inicializa o texto da tela de game over
         self.game_over_title = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 70)
         self.game_over_title_surf = self.game_over_title.render(
@@ -104,7 +107,7 @@ class Game():
 
         # Inicializa os efeitos sonoros
         self.shield_impact = pygame.mixer.Sound(f'{self.assets_path}/effects/shield_impact.wav')
-        self.shield_impact.set_volume(0.15)
+        self.shield_impact.set_volume(0.10)
         self.damage_sound = pygame.mixer.Sound(f'{self.assets_path}/effects/damage.wav')
         self.press_sound = pygame.mixer.Sound(f'{self.assets_path}/effects/press.wav')
 
@@ -272,12 +275,29 @@ class Game():
             pygame.display.flip()
             pygame.time.delay(18)
     
+    def blink_text(self):
+        
+        if self.blink_flag == True:
+            self.subtitle_surf.set_alpha(self.subtitle_alpha)
+            self.subtitle_alpha -= 3
+
+            if self.subtitle_alpha <= 0:
+                self.blink_flag = False
+        
+        if self.blink_flag == False:
+            self.subtitle_surf.set_alpha(self.subtitle_alpha)
+            self.subtitle_alpha += 3
+
+            if self.subtitle_alpha >= 255:
+                self.blink_flag = True
+    
 
     def render_menu(self):
         self.screen.blit(self.menu_surf, (0, 0))
 
         self.screen.blit(self.title_surf, self.title_rect)
         self.screen.blit(self.subtitle_surf, self.subtitle_rect)
+        self.blink_text()
         self.screen.blit(self.copyright_surf, self.copyright_rect)
 
     def render_level(self):
@@ -330,7 +350,7 @@ class Game():
             self.render_menu()
             self.screen.blit(self.fade, (0, 0))
             pygame.display.flip()
-            pygame.time.delay(8)
+            pygame.time.delay(5)
 
         for alpha in range(255, 0, -1):
             pygame.event.get()
@@ -338,7 +358,7 @@ class Game():
             self.render_level()
             self.screen.blit(self.fade, (0, 0))
             pygame.display.flip()
-            pygame.time.delay(8)
+            pygame.time.delay(5)
 
     # Função que cuida da geração de blasts
     def spawn_blast(self):
