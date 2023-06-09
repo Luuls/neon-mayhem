@@ -25,6 +25,8 @@ def main():
             # Dispara a condição para iniciar o level
             if game.get_current_state() == 'MENU':
                 if event.type == pygame.KEYDOWN:
+                    pygame.mixer.Sound.play(game.press_sound)
+                    
                     if event.key == pygame.K_RETURN:
                         pygame.mixer.music.stop()
                         game.fade_level()

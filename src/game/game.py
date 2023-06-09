@@ -93,6 +93,11 @@ class Game():
         pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
         pygame.mixer.music.play()
 
+        self.shield_impact = pygame.mixer.Sound(f'{self.assets_path}/effects/shield_impact.wav')
+        self.shield_impact.set_volume(0.15)
+        self.damage_sound = pygame.mixer.Sound(f'{self.assets_path}/effects/damage.wav')
+        self.press_sound = pygame.mixer.Sound(f'{self.assets_path}/effects/press.wav')
+
         # Controle da tela do jogo
         self.states = {
             'MENU': self.render_menu,
@@ -275,10 +280,13 @@ class Game():
             self.blast_list[i].update_position()
 
             if self.blast_list[i].blast_rect.colliderect(self.player.rect):
+                if self.player.health >= 2:
+                    pygame.mixer.Sound.play(self.damage_sound)
                 self.player.damage()
                 eliminated.append(self.blast_list[i])
                     
             elif self.blast_list[i].blast_rect.colliderect(self.player.shield.shield_rect):
+                pygame.mixer.Sound.play(self.shield_impact)
                 eliminated.append(self.blast_list[i])
 
         self.blast_list = [x for x in self.blast_list if x not in eliminated]
