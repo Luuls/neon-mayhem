@@ -365,7 +365,7 @@ class Game():
             self.render_game_over()
             self.screen.blit(self.fade, (0, 0))
             pygame.display.flip()
-            pygame.time.delay(3)
+            pygame.time.delay(2)
 
         for alpha in range(255, 0, -1):
             pygame.event.get()
@@ -373,7 +373,7 @@ class Game():
             self.render_menu()
             self.screen.blit(self.fade, (0, 0))
             pygame.display.flip()
-            pygame.time.delay(3)
+            pygame.time.delay(2)
 
     # Transição entre o menu e o level
     def fade_level(self):
@@ -384,7 +384,7 @@ class Game():
             self.render_menu()
             self.screen.blit(self.fade, (0, 0))
             pygame.display.flip()
-            pygame.time.delay(3)
+            pygame.time.delay(2)
 
         for alpha in range(255, 0, -1):
             pygame.event.get()
@@ -392,7 +392,7 @@ class Game():
             self.render_level()
             self.screen.blit(self.fade, (0, 0))
             pygame.display.flip()
-            pygame.time.delay(3)
+            pygame.time.delay(2)
 
     # Função que cuida da geração de blasts
     def spawn_blast(self):
