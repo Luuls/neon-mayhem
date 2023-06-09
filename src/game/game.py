@@ -16,8 +16,13 @@ class Game():
             (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
         )
 
-        # Personaliza a frase na janela do jogo
+        # Determina o caminho dos assets
+        self.assets_path = get_assets_path(__file__)
+
+        # Personaliza a janela do jogo
         pygame.display.set_caption('Neon Mayhem')
+        self.icon_load = pygame.image.load(f'{self.assets_path}/icon/icon.jpg').convert()
+        pygame.display.set_icon(self.icon_load)
         
         # Cria o player e inicializa o escudo
         self.player = Player()
@@ -34,9 +39,6 @@ class Game():
         # Cria timer do game
         self.game_timer = pygame.USEREVENT + 2
         pygame.time.set_timer(self.game_timer, 16)
-
-        # Determina o caminho dos assets
-        self.assets_path = get_assets_path(__file__)
 
         # Inicializa as imagens do menu, do level e do game over
         menu_load = pygame.image.load(f'{self.assets_path}/backgrounds/menu_background.jpg').convert()
@@ -151,6 +153,7 @@ class Game():
         for alpha in range(255, 0, -1):
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
+                    pygame.mixer.Sound.play(self.press_sound)
                     return
             
             self.fade.set_alpha(alpha)
