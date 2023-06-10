@@ -40,6 +40,7 @@ class Player:
             elif key in [pygame.K_RIGHT, pygame.K_d]:
                 self.shield.move_shield('RIGHT')
         
+    # Função para computar o dano ao player
     def damage(self) -> None:
         if not self.is_alive:
             return 
