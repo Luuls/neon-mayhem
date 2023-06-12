@@ -346,7 +346,10 @@ class Game():
         self.blast_list = [x for x in self.blast_list if x not in eliminated]
 
     def render_game_over(self):
-
+        
+        if self.blast_base_speed != 7:
+            self.blast_base_speed = 7
+            
         if self.player.health <= 0:
             self.player.health = 3
         
