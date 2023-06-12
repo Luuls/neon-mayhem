@@ -103,7 +103,7 @@ class Game():
         )
 
         # Inicializa o texto do número de vidas
-        self.lives_text = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 25)
+        self.information_text = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 25)
     
         # Inicializa a fonte da animação no começo do jogo
         self.intro_credits = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 70)
@@ -315,13 +315,21 @@ class Game():
         self.screen.blit(self.player.shield.shield_sprite, self.player.shield.shield_rect)
         self.player.draw_at(self.screen)
 
-        self.lives_text_surf = self.lives_text.render(
+        self.lives_text_surf = self.information_text.render(
             f'Lives: {self.player.health}', True, 'White'
         )
         self.lives_text_rect = self.lives_text_surf.get_rect(
             bottomleft=(40, 702)
         )
 
+        self.score_text_surf = self.information_text.render(
+            f'Score: {self.player.player_score}', True, 'White'
+        )
+        self.score_text_rect = self.score_text_surf.get_rect(
+            bottomleft=(1150, 702)
+        )
+
+        self.screen.blit(self.score_text_surf, self.score_text_rect)
 
         self.screen.blit(self.lives_text_surf, self.lives_text_rect)        
 
@@ -346,6 +354,9 @@ class Game():
         self.blast_list = [x for x in self.blast_list if x not in eliminated]
 
     def render_game_over(self):
+
+        if self.player.player_score != 0: 
+            self.player.player_score = 0
 
         if self.player.health <= 0:
             self.player.health = 3
@@ -398,3 +409,6 @@ class Game():
     def spawn_blast(self):
         new_blast = Blast('Blue', self.blast_base_speed)
         self.blast_list.append(new_blast)
+
+    def score(self):
+        self.player.player_score += int(self.player.score_multiplier)

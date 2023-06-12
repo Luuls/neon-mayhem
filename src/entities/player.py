@@ -13,6 +13,8 @@ class Player:
         self.health = 3
         self.position_x = game_constants.SCREEN_WIDTH / 2
         self.position_y = game_constants.SCREEN_HEIGHT / 2
+        self.player_score = 0
+        self.score_multiplier = 1
 
         # Carrega a imagem do player
         assets_path = get_assets_path(__file__)
@@ -25,9 +27,9 @@ class Player:
     # Função para computar o dano ao player
     def damage(self) -> None:
         self.health -= 1
+        self.score_multiplier = 1
         if self.health == 0:
             self.is_alive = False
 
     def draw_at(self, screen: Surface):
         screen.blit(self.sprite, self.rect)
-

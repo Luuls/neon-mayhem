@@ -45,6 +45,8 @@ def main():
                 if event.type == game.blast_timer:
                     game.blast_base_speed += game.speed_increment
                     game.spawn_blast()
+                    game.player.score_multiplier += 1/15
+                    game.score()
                     
                 # Esse bloco serve para alterar a posição do escudo
                 if event.type == pygame.KEYDOWN:
