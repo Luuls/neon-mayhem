@@ -81,17 +81,26 @@ class Game():
         self.game_over_title_surf = self.game_over_title.render(
             'GAME OVER', True, '#01bfff'
         )
+
+        self.final_score = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 70)
+        self.final_score_surf = self.final_score.render(
+            f'SCORE: {self.player.player_score}', True, '#01bfff'
+        )
         
         self.game_over_retry_surf = self.game_over_title.render(
             'PRESS ANY KEY TO CONTINUE', True, '#01bfff'
         )
 
+        self.final_score_rect = self.final_score_surf.get_rect(
+            center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2)
+        )
+
         self.game_over_title_rect = self.game_over_title_surf.get_rect(
-            center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 - 20)
+            center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 - 75)
         )
 
         self.game_over_retry_rect = self.game_over_retry_surf.get_rect(
-            center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 + 55)
+            center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 + 75)
         )
 
         self.copyright = pygame.font.Font(f'{self.assets_path}/fonts/game_font.ttf', 17)
@@ -302,6 +311,10 @@ class Game():
     
 
     def render_menu(self):
+
+        if self.player.player_score != 0: 
+            self.player.player_score = 0
+
         self.screen.blit(self.menu_surf, (0, 0))
 
         self.screen.blit(self.title_surf, self.title_rect)
@@ -326,7 +339,7 @@ class Game():
             f'Score: {self.player.player_score}', True, 'White'
         )
         self.score_text_rect = self.score_text_surf.get_rect(
-            bottomleft=(1150, 702)
+            bottomright=(1230, 702)
         )
 
         self.screen.blit(self.score_text_surf, self.score_text_rect)
@@ -355,8 +368,13 @@ class Game():
 
     def render_game_over(self):
 
-        if self.player.player_score != 0: 
-            self.player.player_score = 0
+        self.final_score_surf = self.final_score.render(
+            f'SCORE: {self.player.player_score}', True, '#01bfff'
+        )
+
+        self.final_score_rect = self.final_score_surf.get_rect(
+            center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2)
+        )
 
         if self.blast_base_speed != 7:
             self.blast_base_speed = 7
@@ -370,6 +388,7 @@ class Game():
         self.screen.blit(self.over_surf, (0, 0))
         self.screen.blit(self.game_over_title_surf, self.game_over_title_rect)
         self.screen.blit(self.game_over_retry_surf, self.game_over_retry_rect)
+        self.screen.blit(self.final_score_surf, self.final_score_rect)
 
     def fade_game_over(self):
 
