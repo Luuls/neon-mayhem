@@ -358,6 +358,9 @@ class Game():
         if self.player.player_score != 0: 
             self.player.player_score = 0
 
+        if self.blast_base_speed != 7:
+            self.blast_base_speed = 7
+            
         if self.player.health <= 0:
             self.player.health = 3
         
