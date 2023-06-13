@@ -4,6 +4,8 @@ from typing import Callable
 from abc import ABC, abstractmethod
 
 class Subject(ABC):
+    # Callable é um tipo de objeto que pode ser chamado.
+    # isto é: uma função
     def __init__(self):
         self.observers: list[Callable] = []
 

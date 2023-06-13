@@ -42,56 +42,9 @@ class Game():
             level_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
         )
 
-        over_load = pygame.image.load(f'{assets_path}/backgrounds/over_background.jpg').convert()
-        self.over_surface = pygame.transform.scale(
-            over_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
-        )
-
         # Inicializa o texto do menu
-        self.title = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
-        self.title_surface = self.title.render(
-            'NEON MAYHEM', True, '#01bfff'
-        )
-        self.title_rect = self.title_surface.get_rect(
-            center=(game_constants.SCREEN_WIDTH / 2, 50)
-        )
-
-        self.subtitle = self.title
-        self.subtitle_surface = self.subtitle.render(
-            'Press ENTER to play', True, '#01bfff'
-        )
-        self.subtitle_rect = self.subtitle_surface.get_rect(
-            center=(game_constants.SCREEN_WIDTH / 3, 150)
-        )
-
         self.blink_flag = True
         self.subtitle_alpha = 255
-
-        # Inicializa o texto da tela de game over
-        self.game_over_title = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
-        self.game_over_title_surface = self.game_over_title.render(
-            'GAME OVER', True, '#01bfff'
-        )
-        
-        self.game_over_retry_surface = self.game_over_title.render(
-            'PRESS ANY KEY TO CONTINUE', True, '#01bfff'
-        )
-
-        self.game_over_title_rect = self.game_over_title_surface.get_rect(
-            center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 - 20)
-        )
-
-        self.game_over_retry_rect = self.game_over_retry_surface.get_rect(
-            center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 + 55)
-        )
-
-        self.copyright = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 17)
-        self.copyright_surface = self.copyright.render(
-            '2023 Nemesis Game Co. Published by M. R. Zatelli. All rights reserved.', True, 'White'
-        )
-        self.copyright_rect = self.copyright_surface.get_rect(
-            bottomleft=(20, 702)
-        )
 
         # Inicializa o texto do número de vidas
         self.lives_text = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 25)
@@ -106,12 +59,7 @@ class Game():
 
         # não registra nenhum evento na fila de eventos
         pygame.event.set_blocked(None)
-        # Inicializa os efeitos sonoros
-        self.shield_impact = pygame.mixer.Sound(f'{assets_path}/sound_effects/shield_impact.wav')
-        self.shield_impact.set_volume(0.10)
-        self.damage_sound = pygame.mixer.Sound(f'{assets_path}/sound_effects/damage.wav')
-        self.press_sound = pygame.mixer.Sound(f'{assets_path}/sound_effects/press.wav')
-
+        
         self.keyboard_listener = keyboard_subject.KeyBoardSubject()
 
         self.current_state: State = menu_state.MenuState(self)
@@ -122,7 +70,7 @@ class Game():
         self.fade.fill((0, 0, 0))
 
     def run(self):
-        # Inicia o clock e define a taxa de frames
+        # Inicia o clock
         clock = pygame.time.Clock()
 
         while True:
