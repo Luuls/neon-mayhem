@@ -2,13 +2,12 @@ import pygame
 
 from states.state import State
 import states.menu_state as menu_state
+import states.intro_state as intro_state
 import subjects.keyboard_subject as keyboard_subject
 
 from utility.utils import get_assets_path
 
 from constants import game_constants
-
-from entities.blast import Blast
 
 class Game():
     def __init__(self):
@@ -49,14 +48,6 @@ class Game():
         # Inicializa o texto do número de vidas
         self.lives_text = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 25)
     
-        # Inicializa a fonte da animação no começo do jogo
-        self.intro_credits = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
-        self.intro_credits_2 = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
-
-        # Inicializa trilha sonora do menu
-        pygame.mixer.music.load(f'{assets_path}/songs/menu_track.mp3')
-        pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
-
         # não registra nenhum evento na fila de eventos
         pygame.event.set_blocked(None)
         

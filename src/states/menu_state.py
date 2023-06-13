@@ -16,6 +16,7 @@ class MenuState(state.State):
         
         assets_path = get_assets_path(__file__)
         
+        # CARREGAMENTO DOS ASSETS DO MENU
         background_load = pygame.image.load(f'{assets_path}/backgrounds/menu_background.jpg')
         self.background_surface = pygame.transform.scale(
             background_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
@@ -43,7 +44,10 @@ class MenuState(state.State):
         self.copyright_rect = self.copyright_surface.get_rect(
             bottomleft=(20, 702)
         )
-
+        
+        pygame.mixer.music.load(f'{assets_path}/songs/menu_track.mp3')
+        pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
+        # FIM DO CARREGAMENTO DOS ASSETS DO MENU
 
     def entering(self):
         self.game.keyboard_listener.subscribe(self.update)
