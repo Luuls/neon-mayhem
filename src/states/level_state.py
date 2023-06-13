@@ -6,6 +6,7 @@ import states.menu_state as menu_state
 import game.game as game
 from utility import blast_spawner
 import entities.player as player
+import entities.blast as blast
 
 from subjects import blast_timer_subject
 
@@ -15,17 +16,18 @@ import sys
 class LevelState(state.State):
     def __init__(self, game_ref: game.Game):
         state.State.__init__(self, game_ref)
+        
+        self.player = player.Player()
+        
+        self.blast_list: list[blast.Blast] = []
+        self.blast_spawner = blast_spawner.BlastSpawner(self.blast_list)
+        self.blast_timer_listener = blast_timer_subject.BlastTimerSubject()
 
     def entering(self):
-        self.player = player.Player()
-        self.player.shield.move_shield('UP')
-
         self.game.keyboard_listener.subscribe(self.player.update)
-        pygame.event.set_blocked(None)
-        self.blast_spawner = blast_spawner.BlastSpawner(self.game)
-        self.blast_timer_listener = blast_timer_subject.BlastTimerSubject()
         self.blast_timer_listener.subscribe(self.blast_spawner.spawn)
 
+        pygame.event.set_blocked(None)
         pygame.event.set_allowed(
             [
                 self.game.keyboard_listener.event_type,
@@ -37,8 +39,6 @@ class LevelState(state.State):
         self.game.keyboard_listener.unsubscribe(self.player.update)
         self.blast_timer_listener.unsubscribe(self.blast_spawner.spawn)
 
-        pygame.event.set_blocked(None)
-
     def render(self):
         self.game.screen.blit(self.game.level_surface, (0, 0))
         
@@ -46,23 +46,22 @@ class LevelState(state.State):
 
         self.player.draw_at(self.game.screen)
         self.player.shield.draw_at(self.game.screen)
-        for blast in self.game.blast_list:
+        for blast in self.blast_list:
             blast.draw_at(self.game.screen)
 
     def update(self, keys_pressed: list[int]):
         self.blast_timer_listener.handle_events()
 
-        for i, blast in enumerate(self.game.blast_list):
-            blast.draw_at(self.game.screen)
+        for i, blast in enumerate(self.blast_list):
             blast.update()
 
             if blast.rect.colliderect(self.player.rect):
-                del self.game.blast_list[i]
+                del self.blast_list[i]
                 self.player.damage()
                 
             elif blast.rect.colliderect(self.player.shield.rect):
-                del self.game.blast_list[i]
-
+                del self.blast_list[i]
+                
         for key in keys_pressed:
             if key == pygame.K_ESCAPE:
                 pygame.quit()
@@ -70,4 +69,3 @@ class LevelState(state.State):
 
             elif key == pygame.K_m:
                 self.game.set_state(menu_state.MenuState(self.game))
-            

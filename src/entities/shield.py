@@ -4,6 +4,7 @@ import pygame
 
 from entities import player
 from constants import shield_constants
+from constants import game_constants
 # from game import game_constants
 from utility.utils import get_assets_path
 
@@ -17,30 +18,10 @@ class Shield():
         self.sprite = pygame.transform.rotate(self.sprite, 90)
         self.rect = self.sprite.get_rect()
         self.angle = 0
-        self.move_shield('UP')
+        self.move_shield(game_constants.UP)
 
     def move_shield(self, lane):
-        if lane == 'RIGHT':
-            self.sprite = pygame.transform.rotate(self.sprite, - 90 - self.angle)
-            self.angle = -90
-
-            self.rect = self.sprite.get_rect()
-            self.rect.center = (
-                self.player.position_x + shield_constants.DISTANCE_FROM_PLAYER, 
-                self.player.position_y
-            )
-
-        elif lane == 'LEFT':
-            self.sprite = pygame.transform.rotate(self.sprite, 90 - self.angle)
-            self.angle = 90
-
-            self.rect = self.sprite.get_rect()
-            self.rect.center = (
-                self.player.position_x - shield_constants.DISTANCE_FROM_PLAYER, 
-                self.player.position_y
-            )
-
-        elif lane == 'UP':
+        if lane == game_constants.UP:
             self.sprite = pygame.transform.rotate(self.sprite, 0 - self.angle)
             self.angle = 0
 
@@ -50,7 +31,27 @@ class Shield():
                 self.player.position_y - shield_constants.DISTANCE_FROM_PLAYER
             )
 
-        elif lane == 'DOWN':
+        elif lane == game_constants.RIGHT:
+            self.sprite = pygame.transform.rotate(self.sprite, - 90 - self.angle)
+            self.angle = -90
+
+            self.rect = self.sprite.get_rect()
+            self.rect.center = (
+                self.player.position_x + shield_constants.DISTANCE_FROM_PLAYER, 
+                self.player.position_y
+            )
+    
+        elif lane == game_constants.LEFT:
+            self.sprite = pygame.transform.rotate(self.sprite, 90 - self.angle)
+            self.angle = 90
+
+            self.rect = self.sprite.get_rect()
+            self.rect.center = (
+                self.player.position_x - shield_constants.DISTANCE_FROM_PLAYER, 
+                self.player.position_y
+            )
+
+        elif lane == game_constants.DOWN:
             self.sprite = pygame.transform.rotate(self.sprite, 180 - self.angle)
             self.angle = 180
 

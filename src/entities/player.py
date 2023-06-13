@@ -29,16 +29,16 @@ class Player:
                 sys.exit()
 
             elif key in [pygame.K_UP, pygame.K_w]:
-                self.shield.move_shield('UP')
-                
-            elif key in [pygame.K_DOWN, pygame.K_s]:
-                self.shield.move_shield('DOWN')
-                
-            elif key in [pygame.K_LEFT, pygame.K_a]:
-                self.shield.move_shield('LEFT')
+                self.shield.move_shield(game_constants.UP)
                 
             elif key in [pygame.K_RIGHT, pygame.K_d]:
-                self.shield.move_shield('RIGHT')
+                self.shield.move_shield(game_constants.RIGHT)
+                
+            elif key in [pygame.K_DOWN, pygame.K_s]:
+                self.shield.move_shield(game_constants.DOWN)
+                
+            elif key in [pygame.K_LEFT, pygame.K_a]:
+                self.shield.move_shield(game_constants.LEFT)
         
     # Função para computar o dano ao player
     def damage(self) -> None:
