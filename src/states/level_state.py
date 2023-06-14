@@ -27,11 +27,14 @@ class LevelState(state.State):
         self.blast_timer_listener = blast_timer_subject.BlastTimerSubject()
 
         assets_path = get_assets_path(__file__)
+        
         # Inicializa os efeitos sonoros
         self.shield_impact_sound = pygame.mixer.Sound(f'{assets_path}/sound_effects/shield_impact.wav')
         self.shield_impact_sound.set_volume(0.10)
         self.damage_sound = pygame.mixer.Sound(f'{assets_path}/sound_effects/damage.wav')
         self.press_sound = pygame.mixer.Sound(f'{assets_path}/sound_effects/press.wav')
+
+        pygame.mixer.music.load(f'{assets_path}/songs/level_track.mp3')
 
     def entering(self):
         self.game.keyboard_listener.subscribe(self.player.update)
@@ -44,6 +47,9 @@ class LevelState(state.State):
                 self.blast_timer_listener.event_type
             ]
         )
+
+        # reproduz a música do jogo em loop
+        pygame.mixer.music.play()
 
     def exiting(self):
         self.game.keyboard_listener.unsubscribe(self.player.update)
