@@ -8,6 +8,8 @@ import states.level_state as level_state
 import game.game as game
 
 from constants import game_constants
+from constants import menu_constants
+
 from utility.utils import get_assets_path
 
 class MenuState(state.State):
@@ -57,10 +59,8 @@ class MenuState(state.State):
             [self.game.keyboard_listener.event_type]
         )
         
-        music_timestamp = pygame.mixer.music.get_pos() / 1000
         pygame.mixer.music.play()
-        if music_timestamp > 2:
-            pygame.mixer.music.set_pos(music_timestamp)
+        pygame.mixer.music.set_pos(menu_constants.MUSIC_DROP_TIMESTAMP)
             
     def exiting(self):
         self.game.keyboard_listener.unsubscribe(self.update)
