@@ -57,7 +57,7 @@ class LevelState(state.State):
 
             if blast.rect.colliderect(self.player.rect):
                 del self.blast_list[i]
-                
+
                 self.player.damage()
                 self.damage_sound.play()
 
@@ -66,7 +66,7 @@ class LevelState(state.State):
 
             elif blast.rect.colliderect(self.player.shield.rect):
                 del self.blast_list[i]
-                
+
                 self.shield_impact_sound.play()
 
         for key in keys_pressed:

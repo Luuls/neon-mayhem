@@ -11,7 +11,7 @@ class BlastTimerSubject(subject.Subject):
 
         # Inicia o timer do blast
         self.event_type = pygame.USEREVENT + 1
-        pygame.time.set_timer(self.event_type, 470)
+        pygame.time.set_timer(self.event_type, blast_constants.BLAST_SPAWN_COOLDOWN)
 
         self.blast_speed = blast_constants.BLAST_BASE_SPEED
 

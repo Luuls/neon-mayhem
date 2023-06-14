@@ -57,20 +57,16 @@ class MenuState(state.State):
             [self.game.keyboard_listener.event_type]
         )
         
+        music_timestamp = pygame.mixer.music.get_pos() / 1000
         pygame.mixer.music.play()
-
+        if music_timestamp > 2:
+            pygame.mixer.music.set_pos(music_timestamp)
+            
     def exiting(self):
         self.game.keyboard_listener.unsubscribe(self.update)
 
         pygame.mixer.music.stop()
 
-    def render(self):
-        self.game.screen.blit(self.background_surface, (0, 0))
-
-        self.game.screen.blit(self.title_surface, self.title_rect)
-        self.game.screen.blit(self.subtitle_surface, self.subtitle_rect)
-        self.game.screen.blit(self.copyright_surface, self.copyright_rect)
-    
     def update(self, keys_pressed: list[int]):
         for key in keys_pressed:
             if key == pygame.K_ESCAPE:
@@ -79,3 +75,11 @@ class MenuState(state.State):
 
             elif key == pygame.K_RETURN:
                 self.game.set_state(level_state.LevelState(self.game))
+                
+    def render(self):
+        self.game.screen.blit(self.background_surface, (0, 0))
+
+        self.game.screen.blit(self.title_surface, self.title_rect)
+        self.game.screen.blit(self.subtitle_surface, self.subtitle_rect)
+        self.game.screen.blit(self.copyright_surface, self.copyright_rect)
+    
