@@ -88,7 +88,7 @@ class Game():
         )
         
         self.game_over_retry_surf = self.game_over_title.render(
-            'PRESS ANY KEY TO CONTINUE', True, '#01bfff'
+            'PRESS ENTER TO CONTINUE', True, '#01bfff'
         )
 
         self.final_score_rect = self.final_score_surf.get_rect(

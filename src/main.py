@@ -63,7 +63,7 @@ def main():
                         game.player.shield.update_shield_lane('RIGHT')
             
             if game.get_current_state() == 'GAME OVER':
-                if event.type == pygame.KEYDOWN and event.key != pygame.K_ESCAPE:
+                if event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
                     pygame.mixer.Sound.play(game.press_sound)
                     game.fade_game_over()
                     pygame.mixer.music.load((f'{game.assets_path}/songs/menu_track.mp3'))
