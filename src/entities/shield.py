@@ -5,7 +5,7 @@ import pygame
 from entities import player
 from constants import shield_constants
 from constants import game_constants
-# from game import game_constants
+
 from utility.utils import get_assets_path
 
 class Shield():

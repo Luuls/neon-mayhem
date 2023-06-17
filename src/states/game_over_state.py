@@ -12,8 +12,10 @@ from utility.utils import get_assets_path
 from constants import game_constants
 
 class GameOverState(state.State):
-    def __init__(self, game_ref: game.Game):
+    def __init__(self, game_ref: game.Game, final_score: int):
         state.State.__init__(self, game_ref) 
+        
+        self.final_score = final_score
         
         assets_path = get_assets_path(__file__)
         
@@ -36,6 +38,13 @@ class GameOverState(state.State):
         )
         self.retry_rect = self.retry_surface.get_rect(
             center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 + 55)
+        )
+
+        self.final_score_surface = self.title.render(
+            f'Final score: {self.final_score}', True, 'Orange'
+        )
+        self.final_score_rect = self.final_score_surface.get_rect(
+            center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 + 130)
         )
 
     def entering(self):
@@ -61,3 +70,4 @@ class GameOverState(state.State):
 
         self.game.screen.blit(self.title_surface, self.title_rect)
         self.game.screen.blit(self.retry_surface, self.retry_rect)
+        self.game.screen.blit(self.final_score_surface, self.final_score_rect)

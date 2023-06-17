@@ -8,11 +8,16 @@ import pygame
 
 class Player:
     def __init__(self):
-        self.is_alive = True
-        self.health = 3
-        self.position_x = game_constants.SCREEN_WIDTH / 2
-        self.position_y = game_constants.SCREEN_HEIGHT / 2
+        self.is_alive: bool = True
+        self.health: int = 3
+        
+        self.position_x: float = game_constants.SCREEN_WIDTH / 2
+        self.position_y: float = game_constants.SCREEN_HEIGHT / 2
+        
         self.shield = Shield(self)
+        
+        self.score: int = 0
+        self.score_multiplier: float  = 1
 
         # Carrega a imagem do player
         assets_path = get_assets_path(__file__)
@@ -49,6 +54,7 @@ class Player:
             self.is_alive = False
 
         self.health -= 1
+        self.score_multiplier = 1
 
     def draw_at(self, screen: pygame.Surface):
         screen.blit(self.sprite, self.rect)
