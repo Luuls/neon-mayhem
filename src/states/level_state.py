@@ -30,6 +30,11 @@ class LevelState(state.State):
 
         assets_path = get_assets_path(__file__)
         
+        background_load = pygame.image.load(f'{assets_path}/backgrounds/level_background.jpg').convert()
+        self.background_surface = pygame.transform.scale(
+            background_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
+        )
+        
         # Inicializa os efeitos sonoros
         self.shield_impact_sound = pygame.mixer.Sound(f'{assets_path}/sound_effects/shield_impact.wav')
         self.shield_impact_sound.set_volume(0.10)
@@ -37,11 +42,21 @@ class LevelState(state.State):
         self.press_sound = pygame.mixer.Sound(f'{assets_path}/sound_effects/press.wav')
 
         self.ui_font = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 50)
-        self.lives_surface: pygame.Surface
-        self.score_surface: pygame.Surface
         
-        self.lives_rect: pygame.Rect
-        self.score_rect: pygame.Rect
+        self.lives_surface = self.ui_font.render(
+            f'Lives: {self.player.health}', True, 'White'
+        )
+        self.lives_rect = self.lives_surface.get_rect(
+            bottomleft=(40, 702)
+        )
+
+        self.score_surface = self.ui_font.render(
+            f'Score: {self.player.score}', True, 'White'
+        )
+        self.score_rect = self.score_surface.get_rect(
+            bottomright=(game_constants.SCREEN_WIDTH - 40, 702)
+        )
+
         
         pygame.mixer.music.load(f'{assets_path}/songs/level_track.mp3')
 
@@ -91,15 +106,9 @@ class LevelState(state.State):
         self.lives_surface = self.ui_font.render(
             f'Lives: {self.player.health}', True, 'White'
         )
-        self.lives_rect = self.lives_surface.get_rect(
-            bottomleft=(40, 702)
-        )
-
+        
         self.score_surface = self.ui_font.render(
             f'Score: {self.player.score}', True, 'White'
-        )
-        self.score_rect = self.score_surface.get_rect(
-            bottomright=(game_constants.SCREEN_WIDTH - 40, 702)
         )
 
         for key in keys_pressed:
@@ -111,7 +120,7 @@ class LevelState(state.State):
                 self.game.set_state(menu_state.MenuState(self.game))
 
     def render(self):
-        self.game.screen.blit(self.game.level_surface, (0, 0))
+        self.game.screen.blit(self.background_surface, (0, 0))
         self.game.screen.blit(self.lives_surface, self.lives_rect)
         self.game.screen.blit(self.score_surface, self.score_rect)
         

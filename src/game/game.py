@@ -26,28 +26,10 @@ class Game():
         self.icon_load = pygame.image.load(f'{assets_path}/icon/icon.jpg').convert()
         pygame.display.set_icon(self.icon_load)
 
-        # # Cria timer do game
-        # self.game_timer = pygame.USEREVENT + 2
-        # pygame.time.set_timer(self.game_timer, 16)
-
-        # Inicializa as imagens do menu, do level e do game over
-        menu_load = pygame.image.load(f'{assets_path}/backgrounds/menu_background.jpg').convert()
-        self.menu_surface = pygame.transform.scale(
-            menu_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
-        )
-        
-        level_load = pygame.image.load(f'{assets_path}/backgrounds/level_background.jpg').convert()
-        self.level_surface = pygame.transform.scale(
-            level_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
-        )
-
         # Inicializa o texto do menu
         self.blink_flag = True
         self.subtitle_alpha = 255
 
-        # Inicializa o texto do número de vidas
-        self.lives_text = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 25)
-    
         # não registra nenhum evento na fila de eventos.
         # possibilita que cada estado defina quais tipos
         # de eventos serão lidos pelo pygame

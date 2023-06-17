@@ -48,7 +48,10 @@ class GameOverState(state.State):
         )
 
     def entering(self):
-        pass
+        pygame.event.set_blocked(None)
+        pygame.event.set_allowed(
+            [self.game.keyboard_listener.event_type]
+        )
 
     def exiting(self):
         pass
