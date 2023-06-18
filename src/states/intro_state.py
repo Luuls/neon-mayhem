@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import pygame
-import sys
 
 import states.state as state
 import states.menu_state as menu_state
@@ -16,6 +15,7 @@ class IntroState(state.State):
         
         assets_path = get_assets_path(__file__)
         
+        # CARREGAMENTO DOS ASSETS DA INTRODUÇÃO
         self.press_sound = pygame.mixer.Sound(f'{assets_path}/sound_effects/press.wav')
         
         self.fade = pygame.Surface((game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT))
@@ -34,6 +34,7 @@ class IntroState(state.State):
         # Inicializa trilha sonora do menu
         pygame.mixer.music.load(f'{assets_path}/songs/menu_track.mp3')
         pygame.mixer.music.set_volume(game_constants.MENU_VOLUME)
+        # FIM DO CARREGAMENTO DOS ASSETS DA INTRODUÇÃO
 
     def entering(self):
         pygame.mixer.music.play()

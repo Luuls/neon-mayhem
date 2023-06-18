@@ -1,8 +1,9 @@
+
 import pygame
 
 from states.state import State
-import states.menu_state as menu_state
 import states.intro_state as intro_state
+
 import subjects.keyboard_subject as keyboard_subject
 
 from utility.utils import get_assets_path
@@ -50,9 +51,6 @@ class Game():
             self.render()
             clock.tick(game_constants.FPS)
         
-    def get_current_state(self) -> State:
-        return self.current_state
-
     def set_state(self, new_state: State) -> None:
         self.current_state.exiting()
         self.current_state = new_state

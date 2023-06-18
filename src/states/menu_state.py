@@ -23,21 +23,30 @@ class MenuState(state.State):
         self.background_surface = pygame.transform.scale(
             background_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
         )
-        self.title = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
-        self.title_surface = self.title.render(
-            'NEON MAYHEM', True, '#01bfff'
+        
+        self.game_title_surface = pygame.image.load(f'{assets_path}/icon/game_logo.png')
+        self.game_title_surface = pygame.transform.scale_by(
+            self.game_title_surface, 1.5
         )
-        self.title_rect = self.title_surface.get_rect(
-            center=(game_constants.SCREEN_WIDTH / 2, 50)
+        self.game_title_rect = self.game_title_surface.get_rect(
+            center=(game_constants.SCREEN_WIDTH / 2, 200)
         )
-
-        self.subtitle = self.title
-        self.subtitle_surface = self.subtitle.render(
-            'Press ENTER to play', True, '#01bfff'
-        )
-        self.subtitle_rect = self.subtitle_surface.get_rect(
-            center=(game_constants.SCREEN_WIDTH / 2, 150)
-        )
+        
+        # self.title = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
+        # self.title_surface = self.title.render(
+        #     'NEON MAYHEM', True, '#01bfff'
+        # )
+        # self.title_rect = self.title_surface.get_rect(
+        #     center=(game_constants.SCREEN_WIDTH / 2, 50)
+        # )
+        #
+        # self.subtitle = self.title
+        # self.subtitle_surface = self.subtitle.render(
+        #     'Press ENTER to play', True, '#01bfff'
+        # )
+        # self.subtitle_rect = self.subtitle_surface.get_rect(
+        #     center=(game_constants.SCREEN_WIDTH / 2, 150)
+        # )
 
         self.copyright = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 17)
         self.copyright_surface = self.copyright.render(
@@ -79,7 +88,9 @@ class MenuState(state.State):
     def render(self):
         self.game.screen.blit(self.background_surface, (0, 0))
 
-        self.game.screen.blit(self.title_surface, self.title_rect)
-        self.game.screen.blit(self.subtitle_surface, self.subtitle_rect)
+        self.game.screen.blit(self.game_title_surface, self.game_title_rect)
+
+        # self.game.screen.blit(self.title_surface, self.title_rect)
+        # self.game.screen.blit(self.subtitle_surface, self.subtitle_rect)
         self.game.screen.blit(self.copyright_surface, self.copyright_rect)
     

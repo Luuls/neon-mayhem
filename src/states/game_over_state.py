@@ -19,6 +19,7 @@ class GameOverState(state.State):
         
         assets_path = get_assets_path(__file__)
         
+        # CARREGAMENTO DOS ASSETS DO GAME OVER
         background_load = pygame.image.load(f'{assets_path}/backgrounds/over_background.jpg')
         self.background_surface = pygame.transform.scale(
             background_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
@@ -46,6 +47,7 @@ class GameOverState(state.State):
         self.final_score_rect = self.final_score_surface.get_rect(
             center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 + 130)
         )
+        # FIM DO CARREGAMENTO DOS ASSETS DO GAME OVER
 
     def entering(self):
         pygame.event.set_blocked(None)

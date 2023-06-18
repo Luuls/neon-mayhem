@@ -30,12 +30,12 @@ class LevelState(state.State):
 
         assets_path = get_assets_path(__file__)
         
+        # CARREGAMENTO DOS ASSETS DO LEVEL
         background_load = pygame.image.load(f'{assets_path}/backgrounds/level_background.jpg').convert()
         self.background_surface = pygame.transform.scale(
             background_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
         )
         
-        # Inicializa os efeitos sonoros
         self.shield_impact_sound = pygame.mixer.Sound(f'{assets_path}/sound_effects/shield_impact.wav')
         self.shield_impact_sound.set_volume(0.10)
         self.damage_sound = pygame.mixer.Sound(f'{assets_path}/sound_effects/damage.wav')
@@ -57,8 +57,15 @@ class LevelState(state.State):
             bottomright=(game_constants.SCREEN_WIDTH - 40, 702)
         )
 
-        
+        self.score_multiplier_surface = self.ui_font.render(
+            f'X{int(self.player.score_multiplier)}', True, 'White'
+        )
+        self.score_multiplier_rect = self.score_multiplier_surface.get_rect(
+            bottomright=(game_constants.SCREEN_WIDTH - 40, 702 - 50)
+        )
+
         pygame.mixer.music.load(f'{assets_path}/songs/level_track.mp3')
+        # FIM DO CARREGAMENTO DOS ASSETS DO LEVEL
 
     def entering(self):
         self.game.keyboard_listener.subscribe(self.player.update)
@@ -110,6 +117,16 @@ class LevelState(state.State):
         self.score_surface = self.ui_font.render(
             f'Score: {self.player.score}', True, 'White'
         )
+        self.score_rect = self.score_surface.get_rect(
+            bottomright=(game_constants.SCREEN_WIDTH - 40, 702)
+        )
+        
+        self.score_multiplier_surface = self.ui_font.render(
+            f'X{int(self.player.score_multiplier)}', True, 'White'
+        )
+        self.score_multiplier_rect = self.score_multiplier_surface.get_rect(
+            bottomright=(game_constants.SCREEN_WIDTH - 40, 702 - 50)
+        )
 
         for key in keys_pressed:
             if key == pygame.K_ESCAPE:
@@ -123,6 +140,7 @@ class LevelState(state.State):
         self.game.screen.blit(self.background_surface, (0, 0))
         self.game.screen.blit(self.lives_surface, self.lives_rect)
         self.game.screen.blit(self.score_surface, self.score_rect)
+        self.game.screen.blit(self.score_multiplier_surface, self.score_multiplier_rect)
         
         self.game.screen.blit(self.player.shield.sprite, self.player.shield.rect)
 
