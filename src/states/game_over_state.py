@@ -35,7 +35,7 @@ class GameOverState(state.State):
         )
         
         self.retry_surface = self.title.render(
-            'PRESS ANY KEY TO CONTINUE', True, '#01bfff'
+            'PRESS ENTER TO CONTINUE', True, '#01bfff'
         )
         self.retry_rect = self.retry_surface.get_rect(
             center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 + 55)
