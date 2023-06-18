@@ -10,14 +10,17 @@ import pygame
 
 class Player:
     def __init__(self):
+        self.is_alive: bool = True
+        self.health: int = 3
+        
+        self.position_x: float = game_constants.SCREEN_WIDTH / 2
+        self.position_y: float = game_constants.SCREEN_HEIGHT / 2
+        
+        self.shield = Shield(self)
+        
+        self.score: int = 0
+        self.score_multiplier: float  = 1
 
-        self.alive = True
-        self.shield = Shield()
-        self.health = 3
-        self.position_x = game_constants.SCREEN_WIDTH / 2
-        self.position_y = game_constants.SCREEN_HEIGHT / 2
-
-        # Carrega a imagem do player
         assets_path = get_assets_path(__file__)
         
         # Carrega a imagem do player
@@ -48,8 +51,10 @@ class Player:
         
     # Função para computar o dano ao player
     def damage(self) -> None:
-        self.health -= 1
-        if self.health == 0:
+        if not self.is_alive:
+            return 
+
+        if self.health == 1:
             self.is_alive = False
 
         self.health -= 1
