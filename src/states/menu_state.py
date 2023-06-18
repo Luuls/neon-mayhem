@@ -61,8 +61,7 @@ class MenuState(state.State):
         # FIM DO CARREGAMENTO DOS ASSETS DO MENU
 
     def entering(self):
-        self.game.keyboard_listener.subscribe(self.update)
-
+        # Permite que o pygame leia apenas o teclado
         pygame.event.set_blocked(None)
         pygame.event.set_allowed(
             [self.game.keyboard_listener.event_type]
@@ -72,8 +71,6 @@ class MenuState(state.State):
         pygame.mixer.music.set_pos(menu_constants.MUSIC_DROP_TIMESTAMP)
             
     def exiting(self):
-        self.game.keyboard_listener.unsubscribe(self.update)
-
         pygame.mixer.music.stop()
 
     def update(self, keys_pressed: list[int]):
@@ -90,7 +87,4 @@ class MenuState(state.State):
 
         self.game.screen.blit(self.game_title_surface, self.game_title_rect)
 
-        # self.game.screen.blit(self.title_surface, self.title_rect)
-        # self.game.screen.blit(self.subtitle_surface, self.subtitle_rect)
         self.game.screen.blit(self.copyright_surface, self.copyright_rect)
-    

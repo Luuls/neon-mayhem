@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import pygame
 import random
 
@@ -8,6 +10,7 @@ import constants.game_constants as game_constants
 class Blast():
     def __init__(self, speed: float):
         assets_path = get_assets_path(__file__)
+        
         self.sprite = pygame.image.load(f'{assets_path}/sprites/blast_sprite.png').convert_alpha()
         self.sprite = pygame.transform.scale_by(self.sprite, 0.05)
         

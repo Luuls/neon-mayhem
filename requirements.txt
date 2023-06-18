@@ -1,6 +1,5 @@
 # esse arquivo é para baixar os pacotes na mesma versão pra todo mundo.
 
-# basta rodar <pip install -r requirements.txt> no terminal apenas na primeira vez
-# que clonar o repositório.
+# basta rodar <pip install -r requirements.txt> no terminal
 
 pygame==2.4.0

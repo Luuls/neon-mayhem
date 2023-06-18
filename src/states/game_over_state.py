@@ -50,6 +50,7 @@ class GameOverState(state.State):
         # FIM DO CARREGAMENTO DOS ASSETS DO GAME OVER
 
     def entering(self):
+        # Ao entrar no estado, permite que o pygame leia apenas o teclado
         pygame.event.set_blocked(None)
         pygame.event.set_allowed(
             [self.game.keyboard_listener.event_type]

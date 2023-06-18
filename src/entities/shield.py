@@ -17,9 +17,13 @@ class Shield():
         self.sprite = pygame.transform.scale_by(self.sprite, 0.40)
         self.rect = self.sprite.get_rect()
         self.angle = 0
+        
+        # Escudo começa para cima
         self.move_shield(game_constants.UP)
 
     def move_shield(self, lane):
+        # Rotaciona a sprite do escudo com a diferença de ângulo entre
+        # a direção atual e a direção em que o escudo deve estar
         if lane == game_constants.UP:
             self.sprite = pygame.transform.rotate(self.sprite, 0 - self.angle)
             self.angle = 0

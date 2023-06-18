@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from utility.utils import get_assets_path
 import sys
 
@@ -19,8 +21,9 @@ class Player:
         self.score: int = 0
         self.score_multiplier: float  = 1
 
-        # Carrega a imagem do player
         assets_path = get_assets_path(__file__)
+        
+        # Carrega a imagem do player
         self.sprite = pygame.image.load(f'{assets_path}/sprites/player_sprite.png').convert_alpha()
         self.sprite = pygame.transform.scale_by(self.sprite, 2.5)
 
@@ -33,6 +36,7 @@ class Player:
                 pygame.quit()
                 sys.exit()
 
+            # Move o escudo pelas setinhas ou WASD
             elif key in [pygame.K_UP, pygame.K_w]:
                 self.shield.move_shield(game_constants.UP)
                 

@@ -7,6 +7,7 @@ class Subject(ABC):
     # Callable é um tipo de objeto que pode ser chamado.
     # isto é: uma função
     def __init__(self):
+        # Lista de funções que estão observando determinado assunto (subject)
         self.observers: list[Callable] = []
 
     # inscreve na lista uma função para ser chamada
@@ -17,10 +18,12 @@ class Subject(ABC):
     def unsubscribe(self, observer_callback: Callable):
         self.observers.remove(observer_callback)
 
+    # Chamado a cada frame
     @abstractmethod
     def handle_events(self):
         pass
 
+    # Método para notificar todas as funções da lista observers
     @abstractmethod
     def notify_all(self):
         pass

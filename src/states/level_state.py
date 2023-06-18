@@ -24,7 +24,10 @@ class LevelState(state.State):
         
         self.player = Player()
         
+        # Lista para manter vista dos blasts ativos na tela
         self.blast_list: list[Blast] = []
+
+        # spawnador de blasts
         self.blast_spawner = blast_spawner.BlastSpawner(self.blast_list)
         self.blast_timer_listener = blast_timer_subject.BlastTimerSubject()
 
@@ -68,10 +71,17 @@ class LevelState(state.State):
         # FIM DO CARREGAMENTO DOS ASSETS DO LEVEL
 
     def entering(self):
+        # Inscreve métodos observadores a serem notificados (chamados)
+        # Por exemplo: o método update do player vai ser chamado sempre
+        # que alguma tecla for pressionada. 
+        # Já o método spawn do blast spawner será chamado sempre que
+        # o timer apitar.
         self.game.keyboard_listener.subscribe(self.player.update)
         self.blast_timer_listener.subscribe(self.blast_spawner.spawn)
 
         pygame.event.set_blocked(None)
+        # Permite que o pygame leita apenas eventos de teclado e o evento de
+        # timer
         pygame.event.set_allowed(
             [
                 self.game.keyboard_listener.event_type,
@@ -83,15 +93,18 @@ class LevelState(state.State):
         pygame.mixer.music.play()
 
     def exiting(self):
+        # Ao sair do estado, desinscreve todos os métodos que foram inscritos
         self.game.keyboard_listener.unsubscribe(self.player.update)
         self.blast_timer_listener.unsubscribe(self.blast_spawner.spawn)
         
     def update(self, keys_pressed: list[int]):
         self.blast_timer_listener.handle_events()
 
+        # Atualiza todos os blasts e verifica colisões
         for i, blast in enumerate(self.blast_list):
             blast.update()
 
+            # Colisão de blast com o jogador
             if blast.rect.colliderect(self.player.rect):
                 del self.blast_list[i]
 
@@ -103,6 +116,7 @@ class LevelState(state.State):
                         game_over_state.GameOverState(self.game, self.player.score)
                     )
 
+            # Colisão de blast com o escudo
             elif blast.rect.colliderect(self.player.shield.rect):
                 del self.blast_list[i]
 

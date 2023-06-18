@@ -38,21 +38,28 @@ class IntroState(state.State):
 
     def entering(self):
         pygame.mixer.music.play()
+        
+        # Ao entrar no estado, permite que o pygame leia apenas o teclado
+        pygame.event.set_blocked(None)
         pygame.event.set_allowed(self.game.keyboard_listener.event_type)
 
     def exiting(self):
         pass
 
-    # muito trabalho resolver esse negócio eu só copiei e colei 
+    # muito trabalho resolver esse negócio eu só copiei e colei da antiga
+    # implementação
     def update(self, keys_pressed: list[int]):
         self.intro_credits_surface = self.intro_credits.render(
             'NEMESIS GAME COMPANY', True, 'Grey'
         )
-
         self.intro_credits_rect = self.intro_credits_surface.get_rect(
             center=(game_constants.SCREEN_WIDTH / 2, 360)
         )
 
+        # Os for nessa função servem para esclarecer a tela, quando
+        # o alpha diminui; e escurece a tela quando o alpha aumenta
+
+        # Cada for mostra um texto diferente
         for alpha in range(255, 0, -1):
             for event in pygame.event.get():
                 if event.type == pygame.KEYDOWN:
@@ -82,7 +89,6 @@ class IntroState(state.State):
         self.intro_credits_surface = self.intro_credits.render(
             'IN ASSOCIATION WITH', True, 'Grey'
         )
-
         self.intro_credits_rect = self.intro_credits_surface.get_rect(
             center=(game_constants.SCREEN_WIDTH / 2, 280)
         )
