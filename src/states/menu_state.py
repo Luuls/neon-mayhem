@@ -67,7 +67,7 @@ class MenuState(state.State):
             [self.game.keyboard_listener.event_type]
         )
         
-        pygame.mixer.music.play()
+        pygame.mixer.music.play(-1)
         pygame.mixer.music.set_pos(menu_constants.MUSIC_DROP_TIMESTAMP)
             
     def exiting(self):

@@ -90,7 +90,7 @@ class LevelState(state.State):
         )
 
         # reproduz a música do jogo em loop
-        pygame.mixer.music.play()
+        pygame.mixer.music.play(-1)
 
     def exiting(self):
         # Ao sair do estado, desinscreve todos os métodos que foram inscritos
