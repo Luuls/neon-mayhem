@@ -14,7 +14,7 @@ class Shield():
 
         assets_path = get_assets_path(__file__)
         self.sprite = pygame.image.load(f'{assets_path}/sprites/shield_sprite.png').convert_alpha()
-        self.sprite = pygame.transform.scale_by(self.sprite, 0.40)
+        self.sprite = pygame.transform.scale_by(self.sprite, 0.30)
         self.rect = self.sprite.get_rect()
         self.angle = 0
         
