@@ -20,6 +20,7 @@ class GameOverState(state.State):
         assets_path = get_assets_path(__file__)
         
         # CARREGAMENTO DOS ASSETS DO GAME OVER
+        pygame.mixer.music.load(f'{assets_path}/sound_effects/game-over.mp3')
         background_load = pygame.image.load(f'{assets_path}/backgrounds/over_background.jpg')
         self.background_surface = pygame.transform.scale(
             background_load, (game_constants.SCREEN_WIDTH, game_constants.SCREEN_HEIGHT)
@@ -47,6 +48,8 @@ class GameOverState(state.State):
         self.final_score_rect = self.final_score_surface.get_rect(
             center=(game_constants.SCREEN_WIDTH / 2, game_constants.SCREEN_HEIGHT / 2 + 130)
         )
+        pygame.mixer.music.set_volume(0.3)
+        pygame.mixer.music.play()
         # FIM DO CARREGAMENTO DOS ASSETS DO GAME OVER
 
     def entering(self):
