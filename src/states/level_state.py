@@ -46,12 +46,17 @@ class LevelState(state.State):
 
         self.ui_font = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 50)
         
-        self.lives_surface = self.ui_font.render(
-            f'Lives: {self.player.health}', True, 'White'
-        )
-        self.lives_rect = self.lives_surface.get_rect(
-            bottomleft=(40, 702)
-        )
+        # Carrega ilustrações da vida do jogador
+        self.health_hearts = [
+            pygame.image.load(f'{assets_path}/sprites/8-bit-hearts-{i + 1}.png').convert_alpha()
+            for i in range(3)
+        ]
+        self.health_hearts_rects = [
+            self.health_hearts[i].get_rect(
+                bottomright=(game_constants.SCREEN_WIDTH / 2 - 380, 700)
+            )
+            for i in range(3)
+        ]
 
         self.score_surface = self.ui_font.render(
             f'Score: {self.player.score}', True, 'White'
@@ -79,9 +84,9 @@ class LevelState(state.State):
         self.game.keyboard_listener.subscribe(self.player.update)
         self.blast_timer_listener.subscribe(self.blast_spawner.spawn)
 
-        pygame.event.set_blocked(None)
-        # Permite que o pygame leita apenas eventos de teclado e o evento de
+        # Permite que o pygame leia apenas eventos de teclado e o evento de
         # timer
+        pygame.event.set_blocked(None)
         pygame.event.set_allowed(
             [
                 self.game.keyboard_listener.event_type,
@@ -138,6 +143,7 @@ class LevelState(state.State):
             bottomright=(game_constants.SCREEN_WIDTH - 40, 702 - 50)
         )
 
+        # Tratamento das teclas pressionadas no frame
         for key in keys_pressed:
             if key == pygame.K_ESCAPE:
                 pygame.quit()
@@ -152,19 +158,10 @@ class LevelState(state.State):
         self.game.screen.blit(self.score_multiplier_surface, self.score_multiplier_rect)
         
         self.game.screen.blit(self.player.shield.sprite, self.player.shield.rect)
-        
-        if self.player.health == 3:
-            self.game.screen.blit(self.player.health_heart_3, self.player.health_heart_3_rect)
-            self.player.draw_at(self.game.screen)
-
-        elif self.player.health == 2:
-            self.game.screen.blit(self.player.health_heart_2, self.player.health_heart_2_rect)
-            self.player.draw_at(self.game.screen)
-
-        elif self.player.health == 1:
-            self.game.screen.blit(self.player.health_heart_1, self.player.health_heart_1_rect)
-            self.player.draw_at(self.game.screen)
-
+        self.game.screen.blit(
+            self.health_hearts[self.player.health - 1],
+            self.health_hearts_rects[self.player.health - 1]
+        )
         self.player.draw_at(self.game.screen)
         self.player.shield.draw_at(self.game.screen)
         for blast in self.blast_list:

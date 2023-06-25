@@ -27,25 +27,6 @@ class Player:
         self.sprite = pygame.image.load(f'{assets_path}/sprites/player_sprite.png').convert_alpha()
         self.sprite = pygame.transform.scale_by(self.sprite, 2.5)
 
-        # Carrega ilustrações da vida do jogador
-        self.health_heart_3 = pygame.image.load(f'{assets_path}/sprites/8-bit-hearts-3.png').convert_alpha()    
-        self.health_heart_2 = pygame.image.load(f'{assets_path}/sprites/8-bit-hearts-2.png').convert_alpha()
-        self.health_heart_1 = pygame.image.load(f'{assets_path}/sprites/8-bit-hearts-1.png').convert_alpha()
-
-        self.health_heart_3 = pygame.transform.scale_by(self.health_heart_3, 1.0)
-        self.health_heart_2 = pygame.transform.scale_by(self.health_heart_2, 1.0)
-        self.health_heart_1 = pygame.transform.scale_by(self.health_heart_1, 1.0)
-        
-        self.health_heart_3_rect = self.health_heart_3.get_rect(
-            bottomright=(game_constants.SCREEN_WIDTH / 2 - 380, 700)
-        )
-        self.health_heart_2_rect = self.health_heart_2.get_rect(
-            bottomright=(game_constants.SCREEN_WIDTH / 2 - 380, 700)
-        )
-        self.health_heart_1_rect = self.health_heart_1.get_rect(
-            bottomright=(game_constants.SCREEN_WIDTH / 2 - 380, 700)
-        )
-
         self.rect = self.sprite.get_rect()
         self.rect.center = (self.position_x, self.position_y)
 
