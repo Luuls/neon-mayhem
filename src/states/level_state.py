@@ -90,7 +90,7 @@ class LevelState(state.State):
         )
 
         # reproduz a música do jogo em loop
-        pygame.mixer.music.play()
+        pygame.mixer.music.play(-1)
 
     def exiting(self):
         # Ao sair do estado, desinscreve todos os métodos que foram inscritos
@@ -123,10 +123,6 @@ class LevelState(state.State):
                 self.shield_impact_sound.play()
                 self.player.score += int(self.player.score_multiplier)
                 self.player.score_multiplier += 1 / game_constants.STEPS_TO_INCREMENT_MULTIPLIER
-
-        self.lives_surface = self.ui_font.render(
-            f'Lives: {self.player.health}', True, 'White'
-        )
         
         self.score_surface = self.ui_font.render(
             f'Score: {self.player.score}', True, 'White'
@@ -153,11 +149,22 @@ class LevelState(state.State):
 
     def render(self):
         self.game.screen.blit(self.background_surface, (0, 0))
-        self.game.screen.blit(self.lives_surface, self.lives_rect)
         self.game.screen.blit(self.score_surface, self.score_rect)
         self.game.screen.blit(self.score_multiplier_surface, self.score_multiplier_rect)
         
         self.game.screen.blit(self.player.shield.sprite, self.player.shield.rect)
+        
+        if self.player.health == 3:
+            self.game.screen.blit(self.player.health_heart_3, self.player.health_heart_3_rect)
+            self.player.draw_at(self.game.screen)
+
+        elif self.player.health == 2:
+            self.game.screen.blit(self.player.health_heart_2, self.player.health_heart_2_rect)
+            self.player.draw_at(self.game.screen)
+
+        elif self.player.health == 1:
+            self.game.screen.blit(self.player.health_heart_1, self.player.health_heart_1_rect)
+            self.player.draw_at(self.game.screen)
 
         self.player.draw_at(self.game.screen)
         self.player.shield.draw_at(self.game.screen)
