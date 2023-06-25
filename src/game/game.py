@@ -28,10 +28,6 @@ class Game():
         self.icon_load = pygame.image.load(f'{assets_path}/icon/icon.jpg').convert()
         pygame.display.set_icon(self.icon_load)
 
-        # Inicializa o texto do menu
-        self.blink_flag = True
-        self.subtitle_alpha = 255
-
         # não registra nenhum evento na fila de eventos.
         # possibilita que cada estado defina quais tipos
         # de eventos serão lidos pelo pygame

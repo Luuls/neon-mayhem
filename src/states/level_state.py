@@ -79,9 +79,9 @@ class LevelState(state.State):
         self.game.keyboard_listener.subscribe(self.player.update)
         self.blast_timer_listener.subscribe(self.blast_spawner.spawn)
 
-        pygame.event.set_blocked(None)
-        # Permite que o pygame leita apenas eventos de teclado e o evento de
+        # Permite que o pygame leia apenas eventos de teclado e o evento de
         # timer
+        pygame.event.set_blocked(None)
         pygame.event.set_allowed(
             [
                 self.game.keyboard_listener.event_type,
@@ -142,6 +142,7 @@ class LevelState(state.State):
             bottomright=(game_constants.SCREEN_WIDTH - 40, 702 - 50)
         )
 
+        # Tratamento das teclas pressionadas no frame
         for key in keys_pressed:
             if key == pygame.K_ESCAPE:
                 pygame.quit()
