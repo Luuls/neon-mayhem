@@ -190,7 +190,6 @@ class IntroState(state.State):
             pygame.time.delay(18)
 
             current_music_timestamp = pygame.mixer.music.get_pos() / 1000
-            print(current_music_timestamp, menu_constants.MUSIC_DROP_TIMESTAMP)
             if current_music_timestamp >= menu_constants.MUSIC_DROP_TIMESTAMP:
                 self.game.set_state(menu_state.MenuState(self.game))
                 return
