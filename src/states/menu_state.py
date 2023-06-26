@@ -31,23 +31,6 @@ class MenuState(state.State):
         self.game_title_rect = self.game_title_surface.get_rect(
             center=(game_constants.SCREEN_WIDTH / 2, 200)
         )
-        
-        # self.title = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 70)
-        # self.title_surface = self.title.render(
-        #     'NEON MAYHEM', True, '#01bfff'
-        # )
-        # self.title_rect = self.title_surface.get_rect(
-        #     center=(game_constants.SCREEN_WIDTH / 2, 50)
-        # )
-        #
-        # self.subtitle = self.title
-        # self.subtitle_surface = self.subtitle.render(
-        #     'Press ENTER to play', True, '#01bfff'
-        # )
-        # self.subtitle_rect = self.subtitle_surface.get_rect(
-        #     center=(game_constants.SCREEN_WIDTH / 2, 150)
-        # )
-
         self.copyright = pygame.font.Font(f'{assets_path}/fonts/game_font.ttf', 17)
         self.copyright_surface = self.copyright.render(
             '2023 Nemesis Game Co. Published by M. R. Zatelli. All rights reserved.', True, 'White'
@@ -67,7 +50,7 @@ class MenuState(state.State):
             [self.game.keyboard_listener.event_type]
         )
         
-        pygame.mixer.music.play(-1)
+        pygame.mixer.music.play(0)
         pygame.mixer.music.set_pos(menu_constants.MUSIC_DROP_TIMESTAMP)
             
     def exiting(self):

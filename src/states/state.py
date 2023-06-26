@@ -16,7 +16,7 @@ class State(ABC):
 
     # Atualiza os objetos da tela em cada estado a cada frame
     @abstractmethod
-    def update(self, event) -> None:
+    def update(self, keys_pressed: list[int]) -> None:
         pass
 
     # É chamado ao entrar em um determinado estado

@@ -71,8 +71,6 @@ class LevelState(state.State):
         self.score_multiplier_rect = self.score_multiplier_surface.get_rect(
             bottomright=(game_constants.SCREEN_WIDTH - 40, 702 - 50)
         )
-
-        pygame.mixer.music.load(f'{assets_path}/songs/level_track.mp3')
         # FIM DO CARREGAMENTO DOS ASSETS DO LEVEL
 
     def entering(self):
@@ -94,6 +92,8 @@ class LevelState(state.State):
             ]
         )
 
+        assets_path = get_assets_path(__file__)
+        pygame.mixer.music.load(f'{assets_path}/songs/level_track.mp3')
         # reproduz a música do jogo em loop
         pygame.mixer.music.play(-1)
 
@@ -162,6 +162,7 @@ class LevelState(state.State):
             self.health_hearts[self.player.health - 1],
             self.health_hearts_rects[self.player.health - 1]
         )
+        
         self.player.draw_at(self.game.screen)
         self.player.shield.draw_at(self.game.screen)
         for blast in self.blast_list:

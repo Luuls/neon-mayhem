@@ -8,6 +8,7 @@ import states.menu_state as menu_state
 import game.game as game
 from utility.utils import get_assets_path
 from constants import game_constants
+from constants import menu_constants
 
 class IntroState(state.State):
     def __init__(self, game_ref: game.Game):
@@ -44,6 +45,7 @@ class IntroState(state.State):
         pygame.event.set_allowed(self.game.keyboard_listener.event_type)
 
     def exiting(self):
+        pygame.mixer.music.stop()
         pass
 
     # muito trabalho resolver esse negócio eu só copiei e colei da antiga
@@ -56,8 +58,8 @@ class IntroState(state.State):
             center=(game_constants.SCREEN_WIDTH / 2, 360)
         )
 
-        # Os for nessa função servem para esclarecer a tela, quando
-        # o alpha diminui; e escurece a tela quando o alpha aumenta
+        # Os for nessa função servem para esclarecer a tela quando
+        # o alpha diminui; e escurecer a tela quando o alpha aumenta
 
         # Cada for mostra um texto diferente
         for alpha in range(255, 0, -1):
@@ -173,7 +175,7 @@ class IntroState(state.State):
             self.game.screen.blit(self.intro_credits_surface, self.intro_credits_rect)
             self.game.screen.blit(self.fade, (0, 0))
             pygame.display.flip()
-            pygame.time.delay(18)
+            pygame.time.delay(17)
         
         for alpha in range(255, 0, -1):
             for event in pygame.event.get():
@@ -187,7 +189,11 @@ class IntroState(state.State):
             pygame.display.flip()
             pygame.time.delay(18)
 
-        self.game.set_state(menu_state.MenuState(self.game))
+            current_music_timestamp = pygame.mixer.music.get_pos() / 1000
+            print(current_music_timestamp, menu_constants.MUSIC_DROP_TIMESTAMP)
+            if current_music_timestamp >= menu_constants.MUSIC_DROP_TIMESTAMP:
+                self.game.set_state(menu_state.MenuState(self.game))
+                return
 
     def render(self):
         self.game.screen.blit(self.intro_credits_surface, self.intro_credits_rect)
