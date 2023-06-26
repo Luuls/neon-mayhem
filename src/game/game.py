@@ -28,8 +28,8 @@ class Game():
         self.icon_load = pygame.image.load(f'{assets_path}/icon/icon.jpg').convert()
         pygame.display.set_icon(self.icon_load)
 
-        # não registra nenhum evento na fila de eventos.
-        # possibilita que cada estado defina quais tipos
+        # Não registra nenhum evento na fila de eventos,
+        # e possibilita que cada estado defina quais tipos
         # de eventos serão lidos pelo pygame
         pygame.event.set_blocked(None)
         
@@ -42,12 +42,14 @@ class Game():
         # Inicia o clock
         clock = pygame.time.Clock()
 
+        # Loop principal do jogo
         while True:
             self.keyboard_listener.handle_events()
             self.update(self.keyboard_listener.keys_pressed)
             self.render()
             clock.tick(game_constants.FPS)
         
+    # Método para definir o estado atual
     def set_state(self, new_state: State) -> None:
         self.current_state.exiting()
         self.current_state = new_state
@@ -56,6 +58,7 @@ class Game():
     def update(self, keys_pressed: list[int]):
         self.current_state.update(keys_pressed)
     
+    # Método para renderizar a tela
     def render(self) -> None:
         self.current_state.render()
         pygame.display.flip()
