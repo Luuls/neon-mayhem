@@ -55,7 +55,7 @@ class Game():
         self.current_state = new_state
         self.current_state.entering()
         
-    def update(self, keys_pressed: list[int]):
+    def update(self, keys_pressed: list[int]) -> None:
         self.current_state.update(keys_pressed)
     
     # Método para renderizar a tela
